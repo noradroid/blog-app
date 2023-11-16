@@ -36,7 +36,7 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public Post getPostById(Long id) {
+    public Post getPost(Long id) {
         Optional<Post> opt = postRepository.findById(id);
         if (opt.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post is not found");
@@ -63,7 +63,7 @@ public class PostService {
 
     @Transactional(readOnly = false)
     public PostDto updatePost(Long id, UpdatePostRequestDto req) {
-        Post post = getPostById(id);
+        Post post = getPost(id);
         if (StringUtils.isEmpty(req.getTitle()) || StringUtils.isEmpty(req.getContent())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Title and content must be provided");
         }
@@ -79,7 +79,7 @@ public class PostService {
 
     @Transactional(readOnly = false)
     public void deletePost(Long id) {
-        Post post = getPostById(id);
+        Post post = getPost(id);
         postRepository.delete(post);
     }
 

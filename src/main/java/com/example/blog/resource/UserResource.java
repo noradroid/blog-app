@@ -2,8 +2,8 @@ package com.example.blog.resource;
 
 import com.example.blog.domain.User;
 import com.example.blog.service.UserService;
-import com.example.blog.service.dto.CreateUserRequestDto;
-import com.example.blog.service.dto.UpdateUserRequestDto;
+import com.example.blog.service.dto.user.CreateUserRequestDto;
+import com.example.blog.service.dto.user.UpdateUserRequestDto;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

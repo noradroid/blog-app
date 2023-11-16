@@ -2,8 +2,8 @@ package com.example.blog.service;
 
 import com.example.blog.domain.User;
 import com.example.blog.repository.UserRepository;
-import com.example.blog.service.dto.CreateUserRequestDto;
-import com.example.blog.service.dto.UpdateUserRequestDto;
+import com.example.blog.service.dto.user.CreateUserRequestDto;
+import com.example.blog.service.dto.user.UpdateUserRequestDto;
 import java.util.List;
 import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +24,15 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
+    public User getUser(Long id) {
+        Optional<User> opt = userRepository.findById(id);
+        if (opt.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User is not found");
+        }
+        return opt.get();
+    }
+
     @Transactional(readOnly = false)
     public User createUser(CreateUserRequestDto req) {
         if (StringUtils.isEmpty(req.username)) {
@@ -41,11 +50,7 @@ public class UserService {
 
     @Transactional(readOnly = false)
     public User updateUser(Long id, UpdateUserRequestDto req) {
-        Optional<User> opt = userRepository.findById(id);
-        if (opt.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User is not found");
-        }
-        User user = opt.get();
+        User user = getUser(id);
         if (StringUtils.isEmpty(req.username)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username must be provided");
         }
@@ -60,11 +65,7 @@ public class UserService {
 
     @Transactional(readOnly = false)
     public void deleteUser(Long id) {
-        Optional<User> opt = userRepository.findById(id);
-        if (opt.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User is not found");
-        }
-        User user = opt.get();
+        User user = getUser(id);
         userRepository.delete(user);
     }
 

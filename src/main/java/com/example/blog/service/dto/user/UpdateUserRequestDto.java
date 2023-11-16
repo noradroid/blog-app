@@ -1,10 +1,10 @@
-package com.example.blog.service.dto;
+package com.example.blog.service.dto.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class CreateUserRequestDto {
+public class UpdateUserRequestDto {
 
-    @JsonProperty(required = true)
+    @JsonProperty(required = false)
     public String username;
 
     @JsonProperty(required = false)

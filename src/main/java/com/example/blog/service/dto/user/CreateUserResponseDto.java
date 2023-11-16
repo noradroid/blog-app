@@ -1,4 +1,4 @@
-package com.example.blog.service.dto;
+package com.example.blog.service.dto.user;
 
 import com.example.blog.domain.User;
 import com.fasterxml.jackson.annotation.JsonProperty;

@@ -3,8 +3,10 @@ package com.example.blog.service;
 import com.example.blog.domain.User;
 import com.example.blog.repository.UserRepository;
 import com.example.blog.service.dto.CreateUserRequestDto;
-import com.example.blog.service.dto.CreateUserResponseDto;
+import com.example.blog.service.dto.UpdateUserRequestDto;
 import java.util.List;
+import java.util.Optional;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,8 +25,8 @@ public class UserService {
     }
 
     @Transactional(readOnly = false)
-    public CreateUserResponseDto createUser(CreateUserRequestDto req) {
-        if (req.username == null || req.username.isEmpty()) {
+    public User createUser(CreateUserRequestDto req) {
+        if (StringUtils.isEmpty(req.username)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username not provided.");
         }
         if (!isUsernameAvailable(req.username)) {
@@ -34,7 +36,36 @@ public class UserService {
         user.setUsername(req.username);
         user.setEmail(req.email);
         userRepository.save(user);
-        return new CreateUserResponseDto(user);
+        return user;
+    }
+
+    @Transactional(readOnly = false)
+    public User updateUser(Long id, UpdateUserRequestDto req) {
+        Optional<User> opt = userRepository.findById(id);
+        if (opt.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User is not found");
+        }
+        User user = opt.get();
+        if (StringUtils.isEmpty(req.username)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username must be provided");
+        }
+        if (!req.username.equals(user.getUsername()) && !isUsernameAvailable(req.username)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username is taken, please choose another name.");
+        }
+        user.setUsername(req.username);
+        user.setEmail(req.email);
+        userRepository.save(user);
+        return user;
+    }
+
+    @Transactional(readOnly = false)
+    public void deleteUser(Long id) {
+        Optional<User> opt = userRepository.findById(id);
+        if (opt.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User is not found");
+        }
+        User user = opt.get();
+        userRepository.delete(user);
     }
 
     @Transactional(readOnly = true)

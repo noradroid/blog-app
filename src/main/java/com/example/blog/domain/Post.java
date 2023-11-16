@@ -10,8 +10,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import java.time.Instant;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 @Entity
 @Table(name = "posts")
@@ -29,6 +32,14 @@ public class Post {
     @NotNull
     @Column
     private String content;
+
+    @CreatedDate
+    @Column
+    private Instant createdDate = Instant.now();
+
+    @LastModifiedDate
+    @Column
+    private Instant lastModifiedDate = Instant.now();
 
     @CreatedBy
     @NotNull

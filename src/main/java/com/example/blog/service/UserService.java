@@ -38,7 +38,7 @@ public class UserService {
         if (StringUtils.isEmpty(req.username)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username not provided.");
         }
-        if (!isUsernameAvailable(req.username)) {
+        if (isUsernameTaken(req.username)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Username is taken, please choose another name.");
         }
         User user = new User();
@@ -54,7 +54,7 @@ public class UserService {
         if (StringUtils.isEmpty(req.username)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username must be provided");
         }
-        if (!req.username.equals(user.getUsername()) && !isUsernameAvailable(req.username)) {
+        if (!req.username.equals(user.getUsername()) && isUsernameTaken(req.username)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Username is taken, please choose another name.");
         }
         user.setUsername(req.username);
@@ -70,7 +70,7 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public boolean isUsernameAvailable(String username) {
-        return !userRepository.existsByUsernameIgnoreCase(username);
+    public boolean isUsernameTaken(String username) {
+        return userRepository.existsByUsernameIgnoreCase(username);
     }
 }

@@ -8,7 +8,6 @@ import com.example.blog.repository.CommentRepository;
 import com.example.blog.service.dto.comment.CommentDto;
 import com.example.blog.service.dto.comment.CreateCommentRequestDto;
 import com.example.blog.service.dto.comment.UpdateCommentRequestDto;
-import com.example.blog.service.dto.post.PostDto;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
@@ -31,52 +30,48 @@ public class CommentService {
     @Autowired
     PostService postService;
 
+    /**
+     * Used for feed, get only active comments.
+     */
     @Transactional(readOnly = true)
-    public List<CommentDto> getComments() {
+    public List<CommentDto> getAllComments() {
         return commentRepository.findAllByActive(StatusConstants.ACTIVE)
             .stream().map(CommentDto::new).toList();
     }
 
+    /**
+     * Get comments regardless if active or not.
+     */
     @Transactional(readOnly = true)
-    public List<CommentDto> getCommentsByPost(Long postId) {
-        return commentRepository.findAllByPostIdAndActiveTrue(postId).stream().map(CommentDto::new)
-            .toList();
+    public List<CommentDto> getTopLevelCommentsOfPost(Long postId) {
+        return commentRepository.findAllByPostIdAndParentIdIsNull(postId).stream().map(CommentDto::new).toList();
+    }
+
+    /**
+     * Get comments regardless if active or not.
+     */
+    @Transactional(readOnly = true)
+    public List<CommentDto> getCommentsOfParent(Long parentId) {
+        return commentRepository.findAllByParentId(parentId).stream().map(CommentDto::new).toList();
+    }
+
+    /**
+     * Used for feed, get only active comments.
+     */
+    @Transactional(readOnly = true)
+    public List<CommentDto> getCommentsByUser(Long userId) {
+        return commentRepository.findAllByUserIdAndActiveTrue(userId).stream().map(CommentDto::new).toList();
     }
 
     @Transactional(readOnly = true)
-    public List<CommentDto> getCommentsByParent(Long parentId) {
-        return commentRepository.findAllByParentIdAndActiveTrue(parentId).stream()
-            .map(CommentDto::new).toList();
-    }
-
-    @Transactional(readOnly = true)
-    public PostDto getCommentPost(Long id) {
+    public CommentDto getCommentById(Long id) {
         Comment comment = getComment(id);
-        Post post = comment.getPost();
-        if (post == null) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
-                "An error has occurred where the comment does not belong on a post"
-            );
-        }
-        if (post.getActive().equals(StatusConstants.DELETED)) {
-            throw new EntityDeletedException("Post has been deleted.");
-        }
-        return new PostDto(post);
+        return new CommentDto(comment);
     }
 
-    @Transactional(readOnly = true)
-    public CommentDto getCommentParent(Long id) {
-        Comment comment = getComment(id);
-        Comment parent = comment.getParent();
-        if (parent == null) {
-            return null;
-        }
-        if (parent.getActive().equals(StatusConstants.DELETED)) {
-            throw new EntityDeletedException("Comment has been deleted.");
-        }
-        return new CommentDto(parent);
-    }
-
+    /**
+     * Get comment regardless if active or not.
+     */
     @Transactional(readOnly = true)
     public Comment getComment(Long id) {
         Optional<Comment> opt = commentRepository.findById(id);

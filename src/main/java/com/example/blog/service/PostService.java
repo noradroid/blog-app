@@ -27,16 +27,28 @@ public class PostService {
     @Autowired
     PostRepository postRepository;
 
+    /**
+     * Used for feed, get only active posts.
+     */
     @Transactional(readOnly = true)
-    public List<PostDto> getPosts() {
-        return postRepository.findAllByActive(StatusConstants.ACTIVE)
-            .stream().map(PostDto::new).toList();
+    public List<PostDto> getAllPosts() {
+        return postRepository.findAllByActive(StatusConstants.ACTIVE).stream().map(PostDto::new)
+            .toList();
     }
 
+    /**
+     * Used for feed, get only active posts.
+     */
     @Transactional(readOnly = true)
     public List<PostDto> getPostsByUser(Long userId) {
         return postRepository.findAllByUserIdAndActiveTrue(userId).stream().map(PostDto::new)
             .toList();
+    }
+
+    @Transactional(readOnly = true)
+    public PostDto getPostById(Long id) {
+        Post post = getPost(id);
+        return new PostDto(post);
     }
 
     @Transactional(readOnly = true)

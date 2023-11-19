@@ -1,9 +1,16 @@
 package com.example.blog.resource;
 
 import com.example.blog.domain.User;
+import com.example.blog.service.CommentService;
+import com.example.blog.service.PostService;
 import com.example.blog.service.UserService;
+import com.example.blog.service.dto.comment.CommentDto;
+import com.example.blog.service.dto.post.PostDto;
 import com.example.blog.service.dto.user.CreateUserRequestDto;
 import com.example.blog.service.dto.user.UpdateUserRequestDto;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +32,12 @@ public class UserResource {
     @Autowired
     UserService userService;
 
+    @Autowired
+    PostService postService;
+
+    @Autowired
+    CommentService commentService;
+
     @GetMapping()
     public ResponseEntity<List<User>> getUsers() {
         return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
@@ -45,5 +58,25 @@ public class UserResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
+    }
+
+    @Operation(summary = "Get posts by user")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "OK"),
+        @ApiResponse(responseCode = "404", description = "User not found")
+    })
+    @GetMapping("/{id}/posts")
+    public ResponseEntity<List<PostDto>> getUserPosts(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(postService.getPostsByUser(id), HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get comments by user")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "OK"),
+        @ApiResponse(responseCode = "404", description = "User not found")
+    })
+    @GetMapping("/{id}/comments")
+    public ResponseEntity<List<CommentDto>> getUserComments(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(commentService.getCommentsByUser(id), HttpStatus.OK);
     }
 }

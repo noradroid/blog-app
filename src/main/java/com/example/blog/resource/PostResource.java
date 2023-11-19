@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,12 +26,13 @@ public class PostResource {
     PostService postService;
 
     @GetMapping()
-    public ResponseEntity<List<PostDto>> getPosts(@RequestParam(required = false) Long userId) {
-        if (userId != null) {
-            return new ResponseEntity<>(postService.getPostsByUser(userId), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(postService.getPosts(), HttpStatus.OK);
-        }
+    public ResponseEntity<List<PostDto>> getPosts() {
+        return new ResponseEntity<>(postService.getAllPosts(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PostDto> getPost(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(postService.getPostById(id), HttpStatus.OK);
     }
 
     @PostMapping()
@@ -41,7 +41,9 @@ public class PostResource {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PostDto> updatePost(@PathVariable("id") Long id, @RequestBody UpdatePostRequestDto req) {
+    public ResponseEntity<PostDto> updatePost(@PathVariable("id") Long id,
+        @RequestBody UpdatePostRequestDto req
+    ) {
         return new ResponseEntity<>(postService.updatePost(id, req), HttpStatus.OK);
     }
 

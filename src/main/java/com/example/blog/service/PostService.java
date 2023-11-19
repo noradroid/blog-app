@@ -66,6 +66,7 @@ public class PostService {
         post.setTitle(req.getTitle());
         post.setContent(req.getContent());
         post.setUser(user);
+        post.setRecordStatusValue(RecordStatus.ACTIVE.getValue());
         postRepository.save(post);
         return new PostDto(post);
     }

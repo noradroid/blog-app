@@ -1,6 +1,5 @@
 package com.example.blog.resource;
 
-import com.example.blog.domain.Comment;
 import com.example.blog.service.CommentService;
 import com.example.blog.service.dto.comment.CommentDto;
 import com.example.blog.service.dto.comment.CreateCommentRequestDto;
@@ -87,4 +86,5 @@ public class CommentResource {
     public void deleteComment(@PathVariable Long id) {
         commentService.deleteComment(id);
     }
+
 }

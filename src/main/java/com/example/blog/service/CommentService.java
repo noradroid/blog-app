@@ -2,6 +2,7 @@ package com.example.blog.service;
 
 import com.example.blog.domain.Comment;
 import com.example.blog.domain.Post;
+import com.example.blog.enums.RecordStatus;
 import com.example.blog.repository.CommentRepository;
 import com.example.blog.service.dto.comment.CommentDto;
 import com.example.blog.service.dto.comment.CreateCommentRequestDto;
@@ -30,17 +31,22 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public List<CommentDto> getComments() {
-        return commentRepository.findAll().stream().map(CommentDto::new).toList();
+        return commentRepository.findAllByRecordStatusValueNot(RecordStatus.DELETED.getValue())
+            .stream().map(CommentDto::new).toList();
     }
 
     @Transactional(readOnly = true)
     public List<CommentDto> getCommentsByPost(Long postId) {
-        return commentRepository.findAllByPostId(postId).stream().map(CommentDto::new).toList();
+        return commentRepository.findAllByPostIdAndRecordStatusValueNot(postId,
+            RecordStatus.DELETED.getValue()
+        ).stream().map(CommentDto::new).toList();
     }
 
     @Transactional(readOnly = true)
     public List<CommentDto> getCommentsByParent(Long parentId) {
-        return commentRepository.findAllByParentId(parentId).stream().map(CommentDto::new).toList();
+        return commentRepository.findAllByParentIdAndRecordStatusValueNot(parentId,
+            RecordStatus.DELETED.getValue()
+        ).stream().map(CommentDto::new).toList();
     }
 
     @Transactional(readOnly = true)
@@ -71,6 +77,7 @@ public class CommentService {
         }
         comment.setUser(userService.getUser(req.getUserId()));
         comment.setContent(req.getContent());
+        comment.setRecordStatusValue(RecordStatus.ACTIVE.getValue());
         commentRepository.save(comment);
         return new CommentDto(comment);
     }
@@ -89,7 +96,14 @@ public class CommentService {
 
     @Transactional(readOnly = false)
     public void deleteComment(Long id) {
-        Comment comment = getComment(id);
-        commentRepository.delete(comment);
+        try {
+            Comment comment = getComment(id);
+            if (!comment.getRecordStatusValue().equals(RecordStatus.DELETED.getValue())) {
+                comment.setRecordStatusValue(RecordStatus.DELETED.getValue());
+                comment.setLastModifiedDate(Instant.now());
+                commentRepository.save(comment);
+            }
+        } catch (Exception exception) {
+        }
     }
 }

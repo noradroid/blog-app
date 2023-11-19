@@ -6,19 +6,23 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.io.Serializable;
 import lombok.Data;
 
 @Entity
 @Table(name = "users")
 @Data
-public class User {
+public class User implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 
-    @Column(nullable = true)
-    String email;
-
     @Column(nullable = false)
     String username;
+
+    @Column(nullable = true)
+    String email;
 }

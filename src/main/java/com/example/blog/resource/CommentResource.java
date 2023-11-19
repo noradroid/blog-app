@@ -1,9 +1,11 @@
 package com.example.blog.resource;
 
+import com.example.blog.domain.Comment;
 import com.example.blog.service.CommentService;
 import com.example.blog.service.dto.comment.CommentDto;
 import com.example.blog.service.dto.comment.CreateCommentRequestDto;
 import com.example.blog.service.dto.comment.UpdateCommentRequestDto;
+import com.example.blog.service.dto.post.PostDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -87,4 +89,31 @@ public class CommentResource {
         commentService.deleteComment(id);
     }
 
+    @Operation(summary = "Get comment's post")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "OK"),
+        @ApiResponse(responseCode = "404", description = "Comment does not exist"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @GetMapping("/{id}/post")
+    public ResponseEntity<PostDto> getCommentPost(
+        @PathVariable(value = "id") Long id
+    ) {
+        PostDto post = commentService.getCommentPost(id);
+        return new ResponseEntity<>(post, HttpStatus.OK);
+    }
+
+    @Operation(summary = "Get comment's parent")
+    @ApiResponses({
+        @ApiResponse(responseCode = "200", description = "OK"),
+        @ApiResponse(responseCode = "404", description = "Comment does not exist"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
+    @GetMapping("/{id}/parent")
+    public ResponseEntity<CommentDto> getCommentParent(
+        @PathVariable(value = "id") Long id
+    ) {
+        CommentDto parent = commentService.getCommentParent(id);
+        return new ResponseEntity<>(parent, HttpStatus.OK);
+    }
 }

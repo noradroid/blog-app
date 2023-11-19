@@ -3,6 +3,7 @@ package com.example.blog.service;
 import com.example.blog.domain.Post;
 import com.example.blog.domain.User;
 import com.example.blog.enums.RecordStatus;
+import com.example.blog.exception.EntityDeletedException;
 import com.example.blog.repository.PostRepository;
 import com.example.blog.service.dto.post.CreatePostRequestDto;
 import com.example.blog.service.dto.post.PostDto;
@@ -73,11 +74,14 @@ public class PostService {
 
     @Transactional(readOnly = false)
     public PostDto updatePost(Long id, UpdatePostRequestDto req) {
-        Post post = getPost(id);
         if (StringUtils.isEmpty(req.getTitle()) || StringUtils.isEmpty(req.getContent())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                 "Title and content must be provided"
             );
+        }
+        Post post = getPost(id);
+        if (post.getRecordStatusValue().equals(RecordStatus.DELETED.getValue())) {
+            throw new EntityDeletedException("Post has been deleted.");
         }
         if (!req.getTitle().equals(post.getTitle()) && isTitleTaken(req.getTitle(),
             post.getUser()

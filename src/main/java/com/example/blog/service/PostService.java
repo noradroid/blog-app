@@ -4,6 +4,7 @@ import com.example.blog.constants.StatusConstants;
 import com.example.blog.domain.Post;
 import com.example.blog.domain.User;
 import com.example.blog.exception.EntityDeletedException;
+import com.example.blog.exception.ResponseCodeException;
 import com.example.blog.repository.PostRepository;
 import com.example.blog.service.dto.post.CreatePostRequestDto;
 import com.example.blog.service.dto.post.PostDto;
@@ -16,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class PostService {
@@ -55,7 +55,7 @@ public class PostService {
     public Post getPost(Long id) {
         Optional<Post> opt = postRepository.findById(id);
         if (opt.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Post is not found");
+            throw new ResponseCodeException(HttpStatus.NOT_FOUND, "Post is not found");
         }
         return opt.get();
     }
@@ -64,13 +64,13 @@ public class PostService {
     public PostDto createPost(CreatePostRequestDto req) {
         if (StringUtils.isEmpty(req.getTitle()) || StringUtils.isEmpty(req.getContent())
             || req.getUserId() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+            throw new ResponseCodeException(HttpStatus.BAD_REQUEST,
                 "Title, content and userId must be provided"
             );
         }
         User user = userService.getUser(req.getUserId());
         if (isTitleTaken(req.getTitle(), user)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT,
+            throw new ResponseCodeException(HttpStatus.CONFLICT,
                 "Title is taken, please use another title"
             );
         }
@@ -86,18 +86,18 @@ public class PostService {
     @Transactional(readOnly = false)
     public PostDto updatePost(Long id, UpdatePostRequestDto req) {
         if (StringUtils.isEmpty(req.getTitle()) || StringUtils.isEmpty(req.getContent())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+            throw new ResponseCodeException(HttpStatus.BAD_REQUEST,
                 "Title and content must be provided"
             );
         }
         Post post = getPost(id);
         if (post.getActive().equals(StatusConstants.DELETED)) {
-            throw new EntityDeletedException("Post has been deleted.");
+            throw new EntityDeletedException("Post has been deleted");
         }
         if (!req.getTitle().equals(post.getTitle()) && isTitleTaken(req.getTitle(),
             post.getUser()
         )) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT,
+            throw new ResponseCodeException(HttpStatus.CONFLICT,
                 "Title is taken, please use another title"
             );
         }

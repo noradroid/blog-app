@@ -1,6 +1,7 @@
 package com.example.blog.service;
 
 import com.example.blog.domain.User;
+import com.example.blog.exception.ResponseCodeException;
 import com.example.blog.repository.UserRepository;
 import com.example.blog.service.dto.user.CreateUserRequestDto;
 import com.example.blog.service.dto.user.UpdateUserRequestDto;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class UserService {
@@ -28,7 +28,7 @@ public class UserService {
     public User getUser(Long id) {
         Optional<User> opt = userRepository.findById(id);
         if (opt.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User is not found");
+            throw new ResponseCodeException(HttpStatus.NOT_FOUND, "User is not found");
         }
         return opt.get();
     }
@@ -36,10 +36,12 @@ public class UserService {
     @Transactional(readOnly = false)
     public User createUser(CreateUserRequestDto req) {
         if (StringUtils.isEmpty(req.username)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username not provided.");
+            throw new ResponseCodeException(HttpStatus.BAD_REQUEST, "Username not provided");
         }
         if (isUsernameTaken(req.username)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username is taken, please choose another name.");
+            throw new ResponseCodeException(HttpStatus.CONFLICT,
+                "Username is taken, please choose another name"
+            );
         }
         User user = new User();
         user.setUsername(req.username);
@@ -52,10 +54,12 @@ public class UserService {
     public User updateUser(Long id, UpdateUserRequestDto req) {
         User user = getUser(id);
         if (StringUtils.isEmpty(req.username)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username must be provided");
+            throw new ResponseCodeException(HttpStatus.BAD_REQUEST, "Username must be provided");
         }
         if (!req.username.equals(user.getUsername()) && isUsernameTaken(req.username)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username is taken, please choose another name.");
+            throw new ResponseCodeException(HttpStatus.CONFLICT,
+                "Username is taken, please choose another name"
+            );
         }
         user.setUsername(req.username);
         user.setEmail(req.email);

@@ -1,5 +1,9 @@
 package com.example.blog.service;
 
+import static com.example.blog.service.CommentHelper.content;
+import static com.example.blog.service.CommentHelper.mockComment;
+import static com.example.blog.service.PostHelper.mockPost;
+import static com.example.blog.service.UserHelper.mockUserA;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -39,12 +43,7 @@ class CommentServiceTest {
     @InjectMocks
     CommentService commentService;
 
-    int id = 1;
-
-    String content = "Content";
-
     User userA = mockUserA();
-    User userB = mockUserB();
 
     Post activePost = mockPost(userA, true);
 
@@ -54,7 +53,7 @@ class CommentServiceTest {
 
     @Test
     void getAllComments_returnActiveComments() {
-        List<Comment> commentObjs = List.of(this.mockComment(userA, activePost, null, true));
+        List<Comment> commentObjs = List.of(mockComment(userA, activePost, null, true));
         List<CommentDto> expected = commentObjs.stream().map(CommentDto::new).toList();
         when(commentRepository.findAllByActive(StatusConstants.ACTIVE)).thenReturn(commentObjs);
         List<CommentDto> actual = commentService.getAllComments();
@@ -64,7 +63,7 @@ class CommentServiceTest {
 
     @Test
     void getTopLevelCommentsOfPost_returnTopLevelComments() {
-        List<Comment> commentObjs = List.of(this.mockComment(userA, activePost, null, true));
+        List<Comment> commentObjs = List.of(mockComment(userA, activePost, null, true));
         List<CommentDto> expected = commentObjs.stream().map(CommentDto::new).toList();
         when(commentRepository.findAllByPostIdAndParentIdIsNull(activePost.getId())).thenReturn(
             commentObjs);
@@ -75,8 +74,8 @@ class CommentServiceTest {
 
     @Test
     void getCommentsOfParent_returnCommentsOfParent() {
-        Comment parent = this.mockComment(userA, activePost, null, true);
-        List<Comment> commentObjs = List.of(this.mockComment(userA, activePost, parent, true));
+        Comment parent = mockComment(userA, activePost, null, true);
+        List<Comment> commentObjs = List.of(mockComment(userA, activePost, parent, true));
         List<CommentDto> expected = commentObjs.stream().map(CommentDto::new).toList();
         when(commentRepository.findAllByParentId(parent.getId())).thenReturn(commentObjs);
         List<CommentDto> actual = commentService.getCommentsOfParent(parent.getId());
@@ -86,7 +85,7 @@ class CommentServiceTest {
 
     @Test
     void getCommentsByUser_returnCommentsByUser() {
-        List<Comment> commentObjs = List.of(this.mockComment(userA, activePost, null, true));
+        List<Comment> commentObjs = List.of(mockComment(userA, activePost, null, true));
         List<CommentDto> expected = commentObjs.stream().map(CommentDto::new).toList();
         when(commentRepository.findAllByUserIdAndActiveTrue(userA.getId())).thenReturn(commentObjs);
         List<CommentDto> actual = commentService.getCommentsByUser(userA.getId());
@@ -97,7 +96,7 @@ class CommentServiceTest {
     @Test
     void getCommentById_returnComment() {
         // active
-        Comment comment = this.mockComment(userA, activePost, null, true);
+        Comment comment = mockComment(userA, activePost, null, true);
         CommentDto expected = new CommentDto(comment);
         when(commentRepository.findById(comment.getId())).thenReturn(Optional.of(comment));
         CommentDto actual = commentService.getCommentById(comment.getId());
@@ -108,8 +107,8 @@ class CommentServiceTest {
         );
         CommentDto deletedActual = commentService.getCommentById(deletedComment.getId());
         assertEquals(false, deletedActual.getActive());
-        assertEquals(null, deletedActual.getContent());
-        assertEquals(null, deletedActual.getUserId());
+        assertNull(deletedActual.getContent());
+        assertNull(deletedActual.getUserId());
     }
 
     @Test
@@ -137,7 +136,7 @@ class CommentServiceTest {
 
     @Test
     void createComment_activePost_success() {
-        Comment comment = this.mockComment(userA, activePost, null, true);
+        Comment comment = mockComment(userA, activePost, null, true);
         CommentDto expected = new CommentDto(comment);
         when(userService.getUser(userA.getId())).thenReturn(userA);
         when(postService.getPost(activePost.getId())).thenReturn(activePost);
@@ -188,8 +187,8 @@ class CommentServiceTest {
 
     @Test
     void createComment_activePostActiveParent_success() {
-        Comment parent = this.mockComment(userA, activePost, null, true);
-        Comment comment = this.mockComment(userA, activePost, parent, true);
+        Comment parent = mockComment(userA, activePost, null, true);
+        Comment comment = mockComment(userA, activePost, parent, true);
         CommentDto expected = new CommentDto(comment);
         when(userService.getUser(userA.getId())).thenReturn(userA);
         when(commentRepository.findById(parent.getId())).thenReturn(Optional.of(parent));
@@ -206,8 +205,8 @@ class CommentServiceTest {
 
     @Test
     void createComment_deletedPostActiveParent_success() {
-        Comment parent = this.mockComment(userA, deletedPost, null, true);
-        Comment comment = this.mockComment(userA, deletedPost, parent, true);
+        Comment parent = mockComment(userA, deletedPost, null, true);
+        Comment comment = mockComment(userA, deletedPost, parent, true);
         CommentDto expected = new CommentDto(comment);
         when(userService.getUser(userA.getId())).thenReturn(userA);
         when(commentRepository.findById(parent.getId())).thenReturn(Optional.of(parent));
@@ -261,7 +260,7 @@ class CommentServiceTest {
     @SneakyThrows
     @Test
     void updateComment_activeComment_success() {
-        Comment comment = this.mockComment(userA, activePost, null, true);
+        Comment comment = mockComment(userA, activePost, null, true);
         CommentDto expected = new CommentDto(comment);
         when(commentRepository.findById(comment.getId())).thenReturn(
             Optional.of(comment)
@@ -304,7 +303,7 @@ class CommentServiceTest {
 
     @Test
     void deleteComment_activeComment_success() {
-        Comment comment = this.mockComment(userA, activePost, null, true);
+        Comment comment = mockComment(userA, activePost, null, true);
         when(commentRepository.findById(comment.getId())).thenReturn(Optional.of(comment));
         commentService.deleteComment(comment.getId());
         assertEquals(false, comment.getActive());
@@ -331,42 +330,5 @@ class CommentServiceTest {
         assertEquals(expected.getPostId(), actual.getPostId());
         assertEquals(expected.getParentId(), actual.getParentId());
         assertEquals(expected.getUserId(), actual.getUserId());
-    }
-
-    private User mockUserA() {
-        User user = new User();
-        user.setId(Long.valueOf(this.id++));
-        user.setUsername("testUserA");
-        user.setEmail("emailA@email.com");
-        return user;
-    }
-
-    private User mockUserB() {
-        User user = new User();
-        user.setId(Long.valueOf(this.id++));
-        user.setUsername("testUserB");
-        user.setEmail("emailB@email.com");
-        return user;
-    }
-
-    private Post mockPost(User user, Boolean active) {
-        Post post = new Post();
-        post.setId(Long.valueOf(this.id++));
-        post.setTitle("First post");
-        post.setContent("This is my first post");
-        post.setUser(user);
-        post.setActive(active);
-        return post;
-    }
-
-    private Comment mockComment(User user, Post post, Comment parent, Boolean active) {
-        Comment comment = new Comment();
-        comment.setId(Long.valueOf(this.id++));
-        comment.setContent(this.content);
-        comment.setPost(post);
-        comment.setUser(user);
-        comment.setParent(parent);
-        comment.setActive(active);
-        return comment;
     }
 }

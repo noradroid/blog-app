@@ -43,6 +43,9 @@ public class Post implements Serializable {
     @Column
     private Instant lastModifiedDate = Instant.now();
 
+    @Column(name = "record_status")
+    private Integer recordStatusValue;
+
     @CreatedBy
     @NotNull
     @ManyToOne

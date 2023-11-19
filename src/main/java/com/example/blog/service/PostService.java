@@ -2,6 +2,7 @@ package com.example.blog.service;
 
 import com.example.blog.domain.Post;
 import com.example.blog.domain.User;
+import com.example.blog.enums.RecordStatus;
 import com.example.blog.repository.PostRepository;
 import com.example.blog.service.dto.post.CreatePostRequestDto;
 import com.example.blog.service.dto.post.PostDto;
@@ -27,12 +28,15 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public List<PostDto> getPosts() {
-        return postRepository.findAll().stream().map(PostDto::new).toList();
+        return postRepository.findAllByRecordStatusValueNot(RecordStatus.DELETED.getValue())
+            .stream().map(PostDto::new).toList();
     }
 
     @Transactional(readOnly = true)
     public List<PostDto> getPostsByUser(Long userId) {
-        return postRepository.findAllByUserId(userId).stream().map(PostDto::new).toList();
+        return postRepository.findAllByUserIdAndRecordStatusValueNot(userId,
+            RecordStatus.DELETED.getValue()
+        ).stream().map(PostDto::new).toList();
     }
 
     @Transactional(readOnly = true)
@@ -46,12 +50,17 @@ public class PostService {
 
     @Transactional(readOnly = false)
     public PostDto createPost(CreatePostRequestDto req) {
-        if (StringUtils.isEmpty(req.getTitle()) || StringUtils.isEmpty(req.getContent()) || req.getUserId() == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Title, content and userId must be provided");
+        if (StringUtils.isEmpty(req.getTitle()) || StringUtils.isEmpty(req.getContent())
+            || req.getUserId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                "Title, content and userId must be provided"
+            );
         }
         User user = userService.getUser(req.getUserId());
         if (isTitleTaken(req.getTitle(), user)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Title is taken, please use another title");
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                "Title is taken, please use another title"
+            );
         }
         Post post = new Post();
         post.setTitle(req.getTitle());
@@ -65,10 +74,16 @@ public class PostService {
     public PostDto updatePost(Long id, UpdatePostRequestDto req) {
         Post post = getPost(id);
         if (StringUtils.isEmpty(req.getTitle()) || StringUtils.isEmpty(req.getContent())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Title and content must be provided");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                "Title and content must be provided"
+            );
         }
-        if (!req.getTitle().equals(post.getTitle()) && isTitleTaken(req.getTitle(), post.getUser())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Title is taken, please use another title");
+        if (!req.getTitle().equals(post.getTitle()) && isTitleTaken(req.getTitle(),
+            post.getUser()
+        )) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT,
+                "Title is taken, please use another title"
+            );
         }
         post.setTitle(req.getTitle());
         post.setContent(req.getContent());
@@ -79,12 +94,20 @@ public class PostService {
 
     @Transactional(readOnly = false)
     public void deletePost(Long id) {
-        Post post = getPost(id);
-        postRepository.delete(post);
+        try {
+            Post post = getPost(id);
+            post.setRecordStatusValue(RecordStatus.DELETED.getValue());
+            post.setLastModifiedDate(Instant.now());
+            postRepository.save(post);
+        } catch (Exception e) {
+        }
+
     }
 
     @Transactional(readOnly = true)
     public boolean isTitleTaken(String title, User user) {
-        return postRepository.existsByTitleIgnoreCaseAndUser(title, user);
+        return postRepository.existsByTitleIgnoreCaseAndUserAndRecordStatusValueNot(title, user,
+            RecordStatus.DELETED.getValue()
+        );
     }
 }

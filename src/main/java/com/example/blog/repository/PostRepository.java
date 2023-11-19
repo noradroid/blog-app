@@ -9,13 +9,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    List<Post> findAllByRecordStatusValueNot(int recordStatusValue);
+    List<Post> findAllByActive(boolean active);
 
-    List<Post> findAllByUserIdAndRecordStatusValueNot(Long parentId, int recordStatusValue);
+    List<Post> findAllByUserIdAndActiveTrue(Long parentId);
 
-    boolean existsByTitleIgnoreCaseAndUserAndRecordStatusValueNot(
+    boolean existsByTitleIgnoreCaseAndUserAndActiveTrue(
         String title,
-        User user,
-        int recordStatusValue
+        User user
     );
 }

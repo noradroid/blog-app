@@ -1,6 +1,5 @@
 package com.example.blog.resource;
 
-import com.example.blog.domain.Comment;
 import com.example.blog.service.CommentService;
 import com.example.blog.service.dto.comment.CommentDto;
 import com.example.blog.service.dto.comment.CreateCommentRequestDto;

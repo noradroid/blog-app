@@ -1,8 +1,8 @@
 package com.example.blog.service;
 
+import com.example.blog.constants.StatusConstants;
 import com.example.blog.domain.Comment;
 import com.example.blog.domain.Post;
-import com.example.blog.enums.RecordStatus;
 import com.example.blog.exception.EntityDeletedException;
 import com.example.blog.repository.CommentRepository;
 import com.example.blog.service.dto.comment.CommentDto;
@@ -33,22 +33,20 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public List<CommentDto> getComments() {
-        return commentRepository.findAllByRecordStatusValueNot(RecordStatus.DELETED.getValue())
+        return commentRepository.findAllByActive(StatusConstants.ACTIVE)
             .stream().map(CommentDto::new).toList();
     }
 
     @Transactional(readOnly = true)
     public List<CommentDto> getCommentsByPost(Long postId) {
-        return commentRepository.findAllByPostIdAndRecordStatusValueNot(postId,
-            RecordStatus.DELETED.getValue()
-        ).stream().map(CommentDto::new).toList();
+        return commentRepository.findAllByPostIdAndActiveTrue(postId).stream().map(CommentDto::new)
+            .toList();
     }
 
     @Transactional(readOnly = true)
     public List<CommentDto> getCommentsByParent(Long parentId) {
-        return commentRepository.findAllByParentIdAndRecordStatusValueNot(parentId,
-            RecordStatus.DELETED.getValue()
-        ).stream().map(CommentDto::new).toList();
+        return commentRepository.findAllByParentIdAndActiveTrue(parentId).stream()
+            .map(CommentDto::new).toList();
     }
 
     @Transactional(readOnly = true)
@@ -60,7 +58,7 @@ public class CommentService {
                 "An error has occurred where the comment does not belong on a post"
             );
         }
-        if (post.getRecordStatusValue().equals(RecordStatus.DELETED.getValue())) {
+        if (post.getActive().equals(StatusConstants.DELETED)) {
             throw new EntityDeletedException("Post has been deleted.");
         }
         return new PostDto(post);
@@ -73,7 +71,7 @@ public class CommentService {
         if (parent == null) {
             return null;
         }
-        if (parent.getRecordStatusValue().equals(RecordStatus.DELETED.getValue())) {
+        if (parent.getActive().equals(StatusConstants.DELETED)) {
             throw new EntityDeletedException("Comment has been deleted.");
         }
         return new CommentDto(parent);
@@ -111,7 +109,7 @@ public class CommentService {
         }
         comment.setUser(userService.getUser(req.getUserId()));
         comment.setContent(req.getContent());
-        comment.setRecordStatusValue(RecordStatus.ACTIVE.getValue());
+        comment.setActive(StatusConstants.ACTIVE);
         commentRepository.save(comment);
         return new CommentDto(comment);
     }
@@ -122,7 +120,7 @@ public class CommentService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Content cannot be empty");
         }
         Comment comment = getComment(id);
-        if (comment.getRecordStatusValue().equals(RecordStatus.DELETED.getValue())) {
+        if (comment.getActive().equals(StatusConstants.DELETED)) {
             throw new EntityDeletedException("Comment has been deleted.");
         }
         comment.setContent(req.getContent());
@@ -135,8 +133,8 @@ public class CommentService {
     public void deleteComment(Long id) {
         try {
             Comment comment = getComment(id);
-            if (!comment.getRecordStatusValue().equals(RecordStatus.DELETED.getValue())) {
-                comment.setRecordStatusValue(RecordStatus.DELETED.getValue());
+            if (!comment.getActive().equals(StatusConstants.DELETED)) {
+                comment.setActive(StatusConstants.DELETED);
                 comment.setLastModifiedDate(Instant.now());
                 commentRepository.save(comment);
             }
@@ -146,7 +144,7 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     private void validateCommentPostIsNotDeleted(Post post) {
-        if (post.getRecordStatusValue().equals(RecordStatus.DELETED.getValue())) {
+        if (post.getActive().equals(StatusConstants.DELETED)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "Post is not found."
             );
@@ -155,7 +153,7 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     private void validateCommentParentIsNotDeleted(Comment parent) {
-        if (parent.getRecordStatusValue().equals(RecordStatus.DELETED.getValue())) {
+        if (parent.getActive().equals(StatusConstants.DELETED)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                 "Parent comment is not found."
             );

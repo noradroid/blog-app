@@ -8,11 +8,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-    List<Comment> findAllByRecordStatusValueNot(int recordStatusValue);
+    List<Comment> findAllByActive(boolean active);
 
-    List<Comment> findAllByParentIdAndRecordStatusValueNot(Long parentId, int recordStatusValue);
+    List<Comment> findAllByParentIdAndActiveTrue(Long parentId);
 
-    List<Comment> findAllByPostIdAndRecordStatusValueNot(Long postId, int recordStatusValue);
+    List<Comment> findAllByPostIdAndActiveTrue(Long postId);
 
     List<Comment> findAllByPostIdAndParentId(Long postId, Long parentId);
 }

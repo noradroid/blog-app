@@ -1,8 +1,8 @@
 package com.example.blog.service;
 
+import com.example.blog.constants.StatusConstants;
 import com.example.blog.domain.Post;
 import com.example.blog.domain.User;
-import com.example.blog.enums.RecordStatus;
 import com.example.blog.exception.EntityDeletedException;
 import com.example.blog.repository.PostRepository;
 import com.example.blog.service.dto.post.CreatePostRequestDto;
@@ -29,15 +29,14 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public List<PostDto> getPosts() {
-        return postRepository.findAllByRecordStatusValueNot(RecordStatus.DELETED.getValue())
+        return postRepository.findAllByActive(StatusConstants.ACTIVE)
             .stream().map(PostDto::new).toList();
     }
 
     @Transactional(readOnly = true)
     public List<PostDto> getPostsByUser(Long userId) {
-        return postRepository.findAllByUserIdAndRecordStatusValueNot(userId,
-            RecordStatus.DELETED.getValue()
-        ).stream().map(PostDto::new).toList();
+        return postRepository.findAllByUserIdAndActiveTrue(userId).stream().map(PostDto::new)
+            .toList();
     }
 
     @Transactional(readOnly = true)
@@ -67,7 +66,7 @@ public class PostService {
         post.setTitle(req.getTitle());
         post.setContent(req.getContent());
         post.setUser(user);
-        post.setRecordStatusValue(RecordStatus.ACTIVE.getValue());
+        post.setActive(StatusConstants.ACTIVE);
         postRepository.save(post);
         return new PostDto(post);
     }
@@ -80,7 +79,7 @@ public class PostService {
             );
         }
         Post post = getPost(id);
-        if (post.getRecordStatusValue().equals(RecordStatus.DELETED.getValue())) {
+        if (post.getActive().equals(StatusConstants.DELETED)) {
             throw new EntityDeletedException("Post has been deleted.");
         }
         if (!req.getTitle().equals(post.getTitle()) && isTitleTaken(req.getTitle(),
@@ -101,7 +100,7 @@ public class PostService {
     public void deletePost(Long id) {
         try {
             Post post = getPost(id);
-            post.setRecordStatusValue(RecordStatus.DELETED.getValue());
+            post.setActive(StatusConstants.DELETED);
             post.setLastModifiedDate(Instant.now());
             postRepository.save(post);
         } catch (Exception e) {
@@ -111,8 +110,6 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public boolean isTitleTaken(String title, User user) {
-        return postRepository.existsByTitleIgnoreCaseAndUserAndRecordStatusValueNot(title, user,
-            RecordStatus.DELETED.getValue()
-        );
+        return postRepository.existsByTitleIgnoreCaseAndUserAndActiveTrue(title, user);
     }
 }

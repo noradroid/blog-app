@@ -1,0 +1,12 @@
+/* Css reset */
+button {
+  background-color: transparent;
+  outline: none;
+  border: none;
+
+  transition: 400ms;
+
+  &:hover {
+    color: $gray-600;
+  }
+}

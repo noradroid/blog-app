@@ -7,6 +7,11 @@ const routes: Routes = [
     loadComponent: () =>
       import('./home/home.component').then((m) => m.HomeComponent),
   },
+  {
+    path: 'post/create',
+    loadComponent: () =>
+      import('./post/create/create.component').then((m) => m.CreateComponent),
+  },
 ];
 
 @NgModule({

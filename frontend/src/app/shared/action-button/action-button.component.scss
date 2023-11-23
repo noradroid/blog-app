@@ -1,0 +1,7 @@
+.action-btn {
+  border: 1px solid black;
+
+  &:hover {
+    border: 1px solid var(--bs-gray-600);
+  }
+}

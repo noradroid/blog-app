@@ -1,7 +1,11 @@
 <div class="w-100 h-100 d-flex flex-column align-items-start">
-  <h2>Create post</h2>
+  <div class="w-100 d-flex justify-content-between align-items-center">
+    <h2>Create post</h2>
 
-  <div class="h-100 w-100 mt-3 border border-black">
+    <app-action-button></app-action-button>
+  </div>
+
+  <div class="h-100 w-100 mt-3 border border-black d-flex flex-column">
     <div
       class="actions-bar border-bottom border-black w-100 py-2 d-flex justify-content-start align-items-center gap-2"
     >
@@ -12,8 +16,11 @@
       <app-numbered-list></app-numbered-list>
       <app-bullet-list></app-bullet-list>
     </div>
-    <div>
-      <span contenteditable="true"><app-cursor></app-cursor></span>
-    </div>
+    <textarea
+      name="textarea"
+      id="textarea"
+      class="w-100 d-flex flex-fill"
+      [(ngModel)]="content"
+    ></textarea>
   </div>
 </div>

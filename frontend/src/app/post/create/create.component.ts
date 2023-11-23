@@ -1,12 +1,16 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { ActionButtonComponent } from 'src/app/shared/action-button/action-button.component';
 import { EditorModule } from 'src/app/shared/editor/editor.module';
 
 @Component({
   selector: 'app-create',
   standalone: true,
-  imports: [CommonModule, EditorModule],
+  imports: [CommonModule, EditorModule, ActionButtonComponent, FormsModule],
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss'],
 })
-export class CreateComponent {}
+export class CreateComponent {
+  content = '';
+}

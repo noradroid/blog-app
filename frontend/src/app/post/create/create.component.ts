@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { PostHttpService } from 'src/app/data/post/post.http.service';
 import { ActionButtonComponent } from 'src/app/shared/action-button/action-button.component';
 import { EditorModule } from 'src/app/shared/editor/editor.module';
 
@@ -13,4 +15,20 @@ import { EditorModule } from 'src/app/shared/editor/editor.module';
 })
 export class CreateComponent {
   content = '';
+
+  service = inject(PostHttpService);
+
+  router = inject(Router);
+
+  submit(): void {
+    this.service
+      .create({
+        title: 'I forgot to create the title field 1',
+        content: this.content,
+        userId: 1,
+      })
+      .subscribe();
+
+    this.router.navigate(['/']);
+  }
 }

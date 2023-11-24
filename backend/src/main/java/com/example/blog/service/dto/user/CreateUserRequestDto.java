@@ -9,4 +9,7 @@ public class CreateUserRequestDto {
 
     @JsonProperty(required = false)
     public String email;
+
+    @JsonProperty(required = true)
+    public String passwordHash;
 }

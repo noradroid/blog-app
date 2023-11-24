@@ -33,10 +33,22 @@ public class UserService {
         return opt.get();
     }
 
+    @Transactional(readOnly = true)
+    public User getUserByUsername(String username) {
+        Optional<User> opt = userRepository.findByUsernameIgnoreCase(username);
+        if (opt.isEmpty()) {
+            throw new ResponseCodeException(HttpStatus.NOT_FOUND, "User is not found");
+        }
+        return opt.get();
+    }
+
     @Transactional(readOnly = false)
     public User createUser(CreateUserRequestDto req) {
         if (StringUtils.isEmpty(req.username)) {
             throw new ResponseCodeException(HttpStatus.BAD_REQUEST, "Username not provided");
+        }
+        if (StringUtils.isEmpty(req.passwordHash)) {
+            throw new ResponseCodeException(HttpStatus.BAD_REQUEST, "Password not provided");
         }
         if (isUsernameTaken(req.username)) {
             throw new ResponseCodeException(HttpStatus.CONFLICT,
@@ -46,6 +58,7 @@ public class UserService {
         User user = new User();
         user.setUsername(req.username);
         user.setEmail(req.email);
+        user.setPasswordHash(req.passwordHash);
         userRepository.save(user);
         return user;
     }
@@ -56,6 +69,9 @@ public class UserService {
         if (StringUtils.isEmpty(req.username)) {
             throw new ResponseCodeException(HttpStatus.BAD_REQUEST, "Username must be provided");
         }
+        if (StringUtils.isEmpty(req.passwordHash)) {
+            throw new ResponseCodeException(HttpStatus.BAD_REQUEST, "Password must be provided");
+        }
         if (!req.username.equals(user.getUsername()) && isUsernameTaken(req.username)) {
             throw new ResponseCodeException(HttpStatus.CONFLICT,
                 "Username is taken, please choose another name"
@@ -63,6 +79,7 @@ public class UserService {
         }
         user.setUsername(req.username);
         user.setEmail(req.email);
+
         userRepository.save(user);
         return user;
     }

@@ -11,8 +11,10 @@
 </div>
 
 <div class="mt-4">
-  <ng-container *ngFor="let post of posts$ | async">
-    <h2>{{ post.title }}</h2>
-    <div>{{ post.content }}</div>
+  <ng-container *appHttpConnectionError="posts$">
+    <ng-container *ngFor="let post of posts$ | async">
+      <h2>{{ post.title }}</h2>
+      <div>{{ post.content }}</div>
+    </ng-container>
   </ng-container>
 </div>

@@ -1,0 +1,22 @@
+<div class="w-100 d-flex flex-column gap-3">
+  <div class="d-flex flex-column align-items-start">
+    <label for="username">Username</label>
+    <input
+      type="text"
+      id="username"
+      name="username"
+      [(ngModel)]="model.username"
+    />
+  </div>
+  <div class="d-flex flex-column align-items-start">
+    <label for="password">password</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      [(ngModel)]="model.password"
+    />
+  </div>
+
+  <app-action-button (click)="submit()"></app-action-button>
+</div>

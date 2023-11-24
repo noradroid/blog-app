@@ -1,3 +1,8 @@
+<div class="mb-3" *ngIf="authService.isUserLoggedIn() | async">
+  <h1>
+    {{ authService.user$ | async }}
+  </h1>
+</div>
 <div class="mb-3">
   <h1>Create your own blog</h1>
 </div>

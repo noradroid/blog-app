@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { shareReplay } from 'rxjs';
 
+import { AuthService } from '../core/auth/auth.service';
 import { PostHttpService } from '../data/post/post.http.service';
 import { HttpConnectionErrorDirective } from '../shared/error/http-connection-error/http-connection-error.directive';
 
@@ -14,6 +15,7 @@ import { HttpConnectionErrorDirective } from '../shared/error/http-connection-er
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
+  authService = inject(AuthService);
   postService = inject(PostHttpService);
 
   posts$ = this.postService.getAll().pipe(shareReplay());

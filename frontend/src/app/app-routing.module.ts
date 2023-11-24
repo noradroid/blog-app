@@ -12,6 +12,11 @@ const routes: Routes = [
     loadComponent: () =>
       import('./post/create/create.component').then((m) => m.CreateComponent),
   },
+  {
+    path: 'signup',
+    loadComponent: () =>
+      import('./auth/sign-up/sign-up.component').then((m) => m.SignUpComponent),
+  },
 ];
 
 @NgModule({

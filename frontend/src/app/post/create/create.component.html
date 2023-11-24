@@ -1,7 +1,15 @@
 <div class="w-100 h-100 d-flex flex-column align-items-start">
   <div class="w-100 d-flex justify-content-between align-items-center">
-    <h2>Create post</h2>
-
+    <div class="d-flex justify-content-start align-items-center w-100 gap-3">
+      <h2>Create post</h2>
+      <input
+        type="text"
+        name="title"
+        id="title"
+        [(ngModel)]="model.title"
+        placeholder="Enter title"
+      />
+    </div>
     <app-action-button (click)="submit()"></app-action-button>
   </div>
 
@@ -17,10 +25,11 @@
       <app-bullet-list></app-bullet-list>
     </div>
     <textarea
-      name="textarea"
-      id="textarea"
+      name="content"
+      id="content"
       class="w-100 d-flex flex-fill"
-      [(ngModel)]="content"
+      [(ngModel)]="model.content"
+      placeholder="Enter content"
     ></textarea>
   </div>
 </div>

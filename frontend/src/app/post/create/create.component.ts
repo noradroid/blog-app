@@ -2,9 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+
 import { PostHttpService } from 'src/app/data/post/post.http.service';
 import { ActionButtonComponent } from 'src/app/shared/action-button/action-button.component';
 import { EditorModule } from 'src/app/shared/editor/editor.module';
+import { CreateForm } from '../shared/model/create-form.model';
 
 @Component({
   selector: 'app-create',
@@ -14,7 +16,10 @@ import { EditorModule } from 'src/app/shared/editor/editor.module';
   styleUrls: ['./create.component.scss'],
 })
 export class CreateComponent {
-  content = '';
+  model: CreateForm = {
+    title: '',
+    content: '',
+  };
 
   service = inject(PostHttpService);
 
@@ -23,8 +28,7 @@ export class CreateComponent {
   submit(): void {
     this.service
       .create({
-        title: 'I forgot to create the title field 1',
-        content: this.content,
+        ...this.model,
         userId: 1,
       })
       .subscribe();

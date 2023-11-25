@@ -1,6 +1,6 @@
-<div class="mb-3" *ngIf="authService.isUserLoggedIn() | async">
+<div class="mb-3">
   <h1>
-    {{ authService.user$ | async }}
+    {{ isLoggedIn$ | async }}
   </h1>
 </div>
 <div class="mb-3">

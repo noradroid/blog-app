@@ -15,10 +15,13 @@ import { HttpConnectionErrorDirective } from '../shared/error/http-connection-er
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  authService = inject(AuthService);
-  postService = inject(PostHttpService);
-
   posts$ = this.postService.getAll().pipe(shareReplay());
+  isLoggedIn$ = this.authService.isUserLoggedIn();
 
   error = false;
+
+  constructor(
+    private authService: AuthService,
+    private postService: PostHttpService
+  ) {}
 }

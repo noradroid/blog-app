@@ -17,9 +17,10 @@
         id="password"
         name="password"
         [(ngModel)]="model.password"
+        autocomplete="off"
       />
     </div>
   </form>
 
-  <app-submit-button (click)="submit()"></app-submit-button>
+  <app-submit-button [submitFn]="submitFn"></app-submit-button>
 </div>

@@ -1,0 +1,16 @@
+<div
+  class="tooltip px-2 py-1 mt-1"
+  [ngClass]="show ? 'show' : ''"
+  [ngStyle]="{
+    'top.px': top,
+    'left.px': left
+  }"
+>
+  <ng-container *ngIf="isTemplateRef(); else string">
+    <ng-container *ngTemplateOutlet="castTemplateRef(tooltip)"></ng-container>
+  </ng-container>
+
+  <ng-template #string>
+    {{ castString(tooltip) }}
+  </ng-template>
+</div>

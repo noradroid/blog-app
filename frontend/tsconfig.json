@@ -6,6 +6,9 @@
     "paths": {
       "button": [
         "dist/button"
+      ],
+      "tooltip": [
+        "dist/tooltip"
       ]
     },
     "outDir": "./dist/out-tsc",

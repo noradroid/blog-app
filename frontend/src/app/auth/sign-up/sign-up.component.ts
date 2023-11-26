@@ -5,12 +5,12 @@ import { SHA256 } from 'crypto-js';
 import { switchMap } from 'rxjs';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { UserHttpService } from 'src/app/data/user/user.http.service';
-import { FormButtonComponent } from 'src/app/shared/form/form-button/form-button.component';
+import { SubmitButtonComponent } from 'src/app/shared/form/submit-button/submit-button.component';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [CommonModule, FormsModule, FormButtonComponent],
+  imports: [CommonModule, FormsModule, SubmitButtonComponent],
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss'],
 })

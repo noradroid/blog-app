@@ -1,22 +1,25 @@
-<div class="w-100 d-flex flex-column gap-3">
-  <div class="d-flex flex-column align-items-start">
-    <label for="username">Username</label>
-    <input
-      type="text"
-      id="username"
-      name="username"
-      [(ngModel)]="model.username"
-    />
-  </div>
-  <div class="d-flex flex-column align-items-start">
-    <label for="password">password</label>
-    <input
-      type="password"
-      id="password"
-      name="password"
-      [(ngModel)]="model.password"
-    />
-  </div>
+<div class="w-100 d-flex flex-column">
+  <h1 class="mb-4">Sign up</h1>
+  <form id="form" class="d-flex flex-column gap-3 mb-4">
+    <div class="d-flex flex-column align-items-start">
+      <label for="username"><strong>Username</strong></label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        [(ngModel)]="model.username"
+      />
+    </div>
+    <div class="d-flex flex-column align-items-start">
+      <label for="password"><strong>Password</strong></label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        [(ngModel)]="model.password"
+      />
+    </div>
+  </form>
 
   <app-form-button type="submit" (click)="submit()">Submit</app-form-button>
 </div>

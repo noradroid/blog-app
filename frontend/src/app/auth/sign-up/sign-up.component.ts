@@ -6,14 +6,14 @@ import { SHA256 } from 'crypto-js';
 import { Observable, switchMap } from 'rxjs';
 
 import { AuthService } from 'src/app/core/auth/auth.service';
-import { UserHttpService } from 'src/app/data/user/user.http.service';
-import { SubmitButtonComponent } from 'src/app/shared/form/submit-button/submit-button.component';
 import { UserRequestDto } from 'src/app/data/user/dto/user-request.model';
+import { UserHttpService } from 'src/app/data/user/user.http.service';
+import { FormLayoutComponent } from 'src/app/shared/form/form-layout/form-layout.component';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [CommonModule, FormsModule, SubmitButtonComponent],
+  imports: [CommonModule, FormsModule, FormLayoutComponent],
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss'],
 })

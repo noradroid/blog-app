@@ -23,6 +23,7 @@ import { LoaderComponent } from '../../loader/loader.component';
   styleUrls: ['./submit-button.component.scss'],
 })
 export class SubmitButtonComponent {
+  @Input() id: string = 'form';
   @Input() submitFn!: () => Observable<any>;
   @Input() errorFn!: (err: HttpErrorResponse) => string;
   @Output() completeEvent = new EventEmitter<void>();

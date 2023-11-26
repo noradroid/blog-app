@@ -1,0 +1,11 @@
+<div class="w-100 d-flex flex-column">
+  <h1 class="mb-4"><ng-content select="[title]"></ng-content></h1>
+  <form [id]="id" class="d-flex flex-column gap-3 mb-4">
+    <ng-content select="[fields]"></ng-content>
+  </form>
+  <app-submit-button
+    [id]="id"
+    [submitFn]="submitFn"
+    [errorFn]="errorFn"
+  ></app-submit-button>
+</div>

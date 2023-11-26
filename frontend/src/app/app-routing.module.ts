@@ -15,8 +15,8 @@ const routes: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./layout/form-layout/form-layout.component').then(
-        (m) => m.FormLayoutComponent
+      import('./layout/box-layout/box-layout.component').then(
+        (m) => m.BoxLayoutComponent
       ),
     children: [
       {

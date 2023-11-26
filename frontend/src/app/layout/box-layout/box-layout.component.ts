@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-form-layout',
+  selector: 'app-box-layout',
   standalone: true,
   imports: [CommonModule, RouterOutlet],
-  templateUrl: './form-layout.component.html',
-  styleUrls: ['./form-layout.component.scss'],
+  templateUrl: './box-layout.component.html',
+  styleUrls: ['./box-layout.component.scss'],
 })
-export class FormLayoutComponent {}
+export class BoxLayoutComponent {}

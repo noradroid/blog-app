@@ -13,9 +13,20 @@ const routes: Routes = [
       import('./post/create/create.component').then((m) => m.CreateComponent),
   },
   {
-    path: 'signup',
+    path: '',
     loadComponent: () =>
-      import('./auth/sign-up/sign-up.component').then((m) => m.SignUpComponent),
+      import('./layout/form-layout/form-layout.component').then(
+        (m) => m.FormLayoutComponent
+      ),
+    children: [
+      {
+        path: 'signup',
+        loadComponent: () =>
+          import('./auth/sign-up/sign-up.component').then(
+            (m) => m.SignUpComponent
+          ),
+      },
+    ],
   },
 ];
 

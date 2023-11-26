@@ -11,13 +11,14 @@ import {
 } from 'rxjs';
 
 import { ButtonModule } from 'button';
+import { TooltipModule } from 'tooltip';
 import { DELAY } from 'src/app/app.constants';
 import { LoaderComponent } from '../../loader/loader.component';
 
 @Component({
   selector: 'app-submit-button',
   standalone: true,
-  imports: [CommonModule, ButtonModule, LoaderComponent],
+  imports: [CommonModule, ButtonModule, LoaderComponent, TooltipModule],
   templateUrl: './submit-button.component.html',
   styleUrls: ['./submit-button.component.scss'],
 })
@@ -31,6 +32,7 @@ export class SubmitButtonComponent {
 
   handleClick(): void {
     this.loading = true;
+    this.error = '';
     this.submitFn()
       .pipe(
         catchError((err) => of(err)),

@@ -1,11 +1,18 @@
-<lib-button type="submit" (clickEvent)="handleClick()">
+<lib-button
+  type="submit"
+  (clickEvent)="handleClick()"
+  [libTooltip]="error ? tooltip : null"
+>
   <ng-container *ngIf="!loading; else loader">
-    <ng-container *ngIf="!error; else errorMsg">Submit</ng-container>
-    <ng-template #errorMsg>
-      <span class="text-danger">{{ error }}</span>
-    </ng-template>
+    <ng-container>
+      <span [ngClass]="error ? 'text-danger' : ''">Submit</span>
+    </ng-container>
   </ng-container>
   <ng-template #loader>
     <app-loader [size]="24"></app-loader>
   </ng-template>
 </lib-button>
+
+<ng-template #tooltip>
+  {{ error }}
+</ng-template>

@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { PostHttpService } from 'src/app/data/post/post.http.service';
-import { ActionButtonComponent } from 'src/app/shared/action-button/action-button.component';
+import { ActionButtonComponent } from 'src/app/shared/button/action-button/action-button.component';
 import { EditorModule } from 'src/app/shared/editor/editor.module';
 import { CreateForm } from '../shared/model/create-form.model';
 

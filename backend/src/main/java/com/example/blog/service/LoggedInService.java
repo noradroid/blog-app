@@ -22,7 +22,7 @@ public class LoggedInService {
     private UserService userService;
 
     @Transactional(readOnly = false)
-    public void loginUser(LoginRequestDto req) {
+    public User loginUser(LoginRequestDto req) {
         if (StringUtils.isEmpty(req.getUsername())) {
             throw new ResponseCodeException(HttpStatus.BAD_REQUEST, "Please provide a username.");
         }
@@ -36,6 +36,7 @@ public class LoggedInService {
         LoggedIn loggedIn = new LoggedIn();
         loggedIn.setUser(user);
         loggedInRepository.save(loggedIn);
+        return user;
     }
 
     @Transactional(readOnly = false)

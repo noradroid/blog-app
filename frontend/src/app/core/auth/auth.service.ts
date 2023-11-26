@@ -15,13 +15,10 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  login(model: LoginRequestDto): Observable<void> {
-    return this.http.post<void>(this.ENDPOINT, model).pipe(
-      tap(() => {
-        this.user.next({
-          username: model.username,
-          id: 0,
-        });
+  login(model: LoginRequestDto): Observable<User> {
+    return this.http.post<User>(this.ENDPOINT, model).pipe(
+      tap((user) => {
+        this.user.next(user);
       })
     );
   }

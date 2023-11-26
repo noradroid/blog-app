@@ -26,6 +26,11 @@ const routes: Routes = [
             (m) => m.SignUpComponent
           ),
       },
+      {
+        path: 'profile',
+        loadComponent: () =>
+          import('./profile/profile.component').then((m) => m.ProfileComponent),
+      },
     ],
   },
 ];

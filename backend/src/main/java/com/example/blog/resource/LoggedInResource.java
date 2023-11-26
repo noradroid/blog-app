@@ -1,5 +1,6 @@
 package com.example.blog.resource;
 
+import com.example.blog.domain.User;
 import com.example.blog.service.LoggedInService;
 import com.example.blog.service.dto.loggedin.LoginRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/li")
 public class LoggedInResource {
 
     @Autowired
@@ -22,8 +23,8 @@ public class LoggedInResource {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.OK)
-    public void loginUser(@RequestBody LoginRequestDto req) {
-        loggedInService.loginUser(req);
+    public ResponseEntity<User> loginUser(@RequestBody LoginRequestDto req) {
+        return new ResponseEntity<User>(loggedInService.loginUser(req), HttpStatus.OK);
     }
 
     @PostMapping("/{username}")

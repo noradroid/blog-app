@@ -1,0 +1,7 @@
+<div class="w-100 d-flex flex-column">
+  <h1 class="mb-4">My Profile</h1>
+
+  <ng-container *ngIf="user$ | async as user">
+    {{ user.username }} {{ user.id }}
+  </ng-container>
+</div>

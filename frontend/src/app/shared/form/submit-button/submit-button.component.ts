@@ -22,10 +22,12 @@ import { LoaderComponent } from '../../loader/loader.component';
   styleUrls: ['./submit-button.component.scss'],
 })
 export class SubmitButtonComponent {
-  @Input() submitFn: () => Observable<any> = () => of();
+  @Input() submitFn!: () => Observable<any>;
+  @Input() errorFn!: (err: HttpErrorResponse) => string;
   @Output() completeEvent = new EventEmitter<void>();
   loading = false;
-  error = false;
+
+  error: string = '';
 
   handleClick(): void {
     this.loading = true;
@@ -39,11 +41,11 @@ export class SubmitButtonComponent {
         next: (res) => {
           this.loading = false;
           if (res instanceof HttpErrorResponse) {
-            this.error = true;
+            this.error = this.errorFn(res);
           } else {
-            this.error = false;
-            this.completeEvent.emit();
+            this.error = '';
           }
+          this.completeEvent.emit();
         },
         error: (err) => {},
       });

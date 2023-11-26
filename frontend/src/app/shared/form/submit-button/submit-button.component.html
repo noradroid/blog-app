@@ -1,4 +1,11 @@
 <lib-button type="submit" (clickEvent)="handleClick()">
-  <ng-container *ngIf="!loading; else loader">Submit</ng-container>
-  <ng-template #loader><app-loader [size]="24"></app-loader></ng-template>
+  <ng-container *ngIf="!loading; else loader">
+    <ng-container *ngIf="!error; else errorMsg">Submit</ng-container>
+    <ng-template #errorMsg>
+      <span class="text-danger">{{ error }}</span>
+    </ng-template>
+  </ng-container>
+  <ng-template #loader>
+    <app-loader [size]="24"></app-loader>
+  </ng-template>
 </lib-button>

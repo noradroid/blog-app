@@ -8,12 +8,21 @@ import { Observable, switchMap } from 'rxjs';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { UserRequestDto } from 'src/app/data/user/dto/user-request.model';
 import { UserHttpService } from 'src/app/data/user/user.http.service';
+import { User } from 'src/app/data/user/user.model';
+import { UsernameInputComponent } from 'src/app/shared/form/fields/username/username.component';
 import { FormLayoutComponent } from 'src/app/shared/form/form-layout/form-layout.component';
+import { FormStylingDirective } from 'src/app/shared/form/form-styling/form-styling.directive';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [CommonModule, FormsModule, FormLayoutComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    FormLayoutComponent,
+    UsernameInputComponent,
+    FormStylingDirective,
+  ],
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss'],
 })
@@ -28,7 +37,7 @@ export class SignUpComponent {
     private authService: AuthService
   ) {}
 
-  submitFn: () => Observable<void> = (): Observable<void> => {
+  submitFn: () => Observable<User> = (): Observable<User> => {
     const model = this.convertToUserRequestDto();
     return this.service
       .create(model)

@@ -1,25 +1,23 @@
 <app-form-layout [id]="'eyed'" [submitFn]="submitFn" [errorFn]="errorFn">
   <ng-container title>Sign up</ng-container>
-  <ng-container fields>
-    <div class="d-flex flex-column align-items-start">
-      <label for="username"><strong>Username</strong></label>
-      <input
-        type="text"
-        id="username"
-        name="username"
-        [(ngModel)]="model.username"
-        autocomplete="off"
-      />
-    </div>
-    <div class="d-flex flex-column align-items-start">
-      <label for="password"><strong>Password</strong></label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        [(ngModel)]="model.password"
-        autocomplete="off"
-      />
-    </div>
+  <ng-container form>
+    <form id="signup" #form="ngForm" appFormStyling>
+      <div class="d-flex flex-column align-items-start">
+        <app-username
+          [(value)]="model.username"
+          [validate]="true"
+        ></app-username>
+      </div>
+      <div class="d-flex flex-column align-items-start">
+        <label for="password"><strong>Password</strong></label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          [(ngModel)]="model.password"
+          autocomplete="off"
+        />
+      </div>
+    </form>
   </ng-container>
 </app-form-layout>

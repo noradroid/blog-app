@@ -1,0 +1,16 @@
+<div
+  class="d-flex align-items-center justify-content-center p-2"
+  style="width: 40px; aspect-ratio: 1/1"
+>
+  <span
+    class="material-symbols-outlined text-danger"
+    [libTooltip]="ctrl.errors | errorMessage : errorMsgs"
+    *ngIf="ctrl.errors"
+    >error</span
+  >
+  <span
+    class="material-symbols-outlined text-success"
+    *ngIf="ctrl.value && ctrl.valid"
+    >check_circle</span
+  >
+</div>

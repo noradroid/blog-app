@@ -1,0 +1,18 @@
+<label for="username" class="mb-2"><strong>Username</strong></label>
+<div class="d-flex align-items-center justify-content-start">
+  <input
+    type="text"
+    id="username"
+    name="username"
+    [(ngModel)]="value"
+    #input="ngModel"
+    autocomplete="off"
+    class="border border-black py-2 px-3"
+    placeholder="Enter username"
+    [appUsernameValidation]="validate"
+  />
+  <app-validation-icon
+    [ctrl]="input.control"
+    [errorMsgs]="errorMsgs"
+  ></app-validation-icon>
+</div>

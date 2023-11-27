@@ -9,14 +9,10 @@
         ></app-username>
       </div>
       <div class="d-flex flex-column align-items-start">
-        <label for="password"><strong>Password</strong></label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          [(ngModel)]="model.password"
-          autocomplete="off"
-        />
+        <app-password
+          [(value)]="model.password"
+          [validate]="true"
+        ></app-password>
       </div>
     </form>
   </ng-container>

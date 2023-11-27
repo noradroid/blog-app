@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/core/auth/auth.service';
 import { UserRequestDto } from 'src/app/data/user/dto/user-request.model';
 import { UserHttpService } from 'src/app/data/user/user.http.service';
 import { User } from 'src/app/data/user/user.model';
+import { PasswordInputComponent } from 'src/app/shared/form/fields/password/password.component';
 import { UsernameInputComponent } from 'src/app/shared/form/fields/username/username.component';
 import { FormLayoutComponent } from 'src/app/shared/form/form-layout/form-layout.component';
 import { FormStylingDirective } from 'src/app/shared/form/form-styling/form-styling.directive';
@@ -20,8 +21,9 @@ import { FormStylingDirective } from 'src/app/shared/form/form-styling/form-styl
     CommonModule,
     FormsModule,
     FormLayoutComponent,
-    UsernameInputComponent,
     FormStylingDirective,
+    UsernameInputComponent,
+    PasswordInputComponent,
   ],
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss'],

@@ -1,8 +1,8 @@
 package com.example.blog.resource;
 
-import com.example.blog.domain.User;
 import com.example.blog.service.LoggedInService;
 import com.example.blog.service.dto.loggedin.LoginRequestDto;
+import com.example.blog.service.dto.user.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +23,8 @@ public class LoggedInResource {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<User> loginUser(@RequestBody LoginRequestDto req) {
-        return new ResponseEntity<User>(loggedInService.loginUser(req), HttpStatus.OK);
+    public ResponseEntity<UserDto> loginUser(@RequestBody LoginRequestDto req) {
+        return new ResponseEntity<>(loggedInService.loginUser(req), HttpStatus.OK);
     }
 
     @PostMapping("/{username}")

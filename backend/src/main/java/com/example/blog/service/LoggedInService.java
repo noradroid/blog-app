@@ -5,6 +5,8 @@ import com.example.blog.domain.User;
 import com.example.blog.exception.ResponseCodeException;
 import com.example.blog.repository.LoggedInRepository;
 import com.example.blog.service.dto.loggedin.LoginRequestDto;
+import com.example.blog.service.dto.user.UserDto;
+import com.example.blog.util.PasswordUtil;
 import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,22 +23,25 @@ public class LoggedInService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PasswordUtil passwordUtil;
+
     @Transactional(readOnly = false)
-    public User loginUser(LoginRequestDto req) {
+    public UserDto loginUser(LoginRequestDto req) {
         if (StringUtils.isEmpty(req.getUsername())) {
             throw new ResponseCodeException(HttpStatus.BAD_REQUEST, "Please provide a username.");
         }
-        if (StringUtils.isEmpty(req.getPasswordHash())) {
+        if (StringUtils.isEmpty(req.getPassword())) {
             throw new ResponseCodeException(HttpStatus.BAD_REQUEST, "Please provide a password.");
         }
         User user = userService.getUserByUsername(req.getUsername());
-        if (!user.getPasswordHash().equals(req.getPasswordHash())) {
+        if (passwordUtil.matchPassword(req.getPassword(), user.getPasswordHash())) {
             throw new ResponseCodeException(HttpStatus.UNAUTHORIZED, "Invalid user credentials.");
         }
         LoggedIn loggedIn = new LoggedIn();
         loggedIn.setUser(user);
         loggedInRepository.save(loggedIn);
-        return user;
+        return new UserDto(user);
     }
 
     @Transactional(readOnly = false)

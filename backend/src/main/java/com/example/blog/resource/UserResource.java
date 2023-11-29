@@ -1,6 +1,5 @@
 package com.example.blog.resource;
 
-import com.example.blog.domain.User;
 import com.example.blog.service.CommentService;
 import com.example.blog.service.PostService;
 import com.example.blog.service.UserService;
@@ -8,6 +7,7 @@ import com.example.blog.service.dto.comment.CommentDto;
 import com.example.blog.service.dto.post.PostDto;
 import com.example.blog.service.dto.user.CreateUserRequestDto;
 import com.example.blog.service.dto.user.UpdateUserRequestDto;
+import com.example.blog.service.dto.user.UserDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -39,18 +39,17 @@ public class UserResource {
     CommentService commentService;
 
     @GetMapping()
-    public ResponseEntity<List<User>> getUsers() {
+    public ResponseEntity<List<UserDto>> getUsers() {
         return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
     }
 
     @PostMapping()
-    public ResponseEntity<User> createUser(@RequestBody CreateUserRequestDto req) {
+    public ResponseEntity<UserDto> createUser(@RequestBody CreateUserRequestDto req) {
         return new ResponseEntity<>(userService.createUser(req), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable("id") Long id, @RequestBody
-        UpdateUserRequestDto req) {
+    public ResponseEntity<UserDto> updateUser(@PathVariable("id") Long id, @RequestBody UpdateUserRequestDto req) {
         return new ResponseEntity<>(userService.updateUser(id, req), HttpStatus.OK);
     }
 
@@ -62,8 +61,8 @@ public class UserResource {
 
     @Operation(summary = "Get posts by user")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "OK"),
-        @ApiResponse(responseCode = "404", description = "User not found")
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "User not found")
     })
     @GetMapping("/{id}/posts")
     public ResponseEntity<List<PostDto>> getUserPosts(@PathVariable("id") Long id) {
@@ -72,8 +71,8 @@ public class UserResource {
 
     @Operation(summary = "Get comments by user")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", description = "OK"),
-        @ApiResponse(responseCode = "404", description = "User not found")
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "404", description = "User not found")
     })
     @GetMapping("/{id}/comments")
     public ResponseEntity<List<CommentDto>> getUserComments(@PathVariable("id") Long id) {

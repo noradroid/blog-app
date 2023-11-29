@@ -11,5 +11,5 @@ public class CreateUserRequestDto {
     public String email;
 
     @JsonProperty(required = true)
-    public String passwordHash;
+    public String password;
 }

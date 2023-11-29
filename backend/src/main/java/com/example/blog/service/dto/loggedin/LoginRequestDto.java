@@ -9,5 +9,5 @@ public class LoginRequestDto {
     String username;
 
     @JsonProperty(required = true)
-    String passwordHash;
+    String password;
 }

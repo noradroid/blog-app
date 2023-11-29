@@ -5,6 +5,8 @@ import com.example.blog.exception.ResponseCodeException;
 import com.example.blog.repository.UserRepository;
 import com.example.blog.service.dto.user.CreateUserRequestDto;
 import com.example.blog.service.dto.user.UpdateUserRequestDto;
+import com.example.blog.service.dto.user.UserDto;
+import com.example.blog.util.PasswordUtil;
 import java.util.List;
 import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
@@ -19,9 +21,12 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    PasswordUtil passwordUtil;
+
     @Transactional(readOnly = true)
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    public List<UserDto> getUsers() {
+        return userRepository.findAll().stream().map(UserDto::new).toList();
     }
 
     @Transactional(readOnly = true)
@@ -43,11 +48,11 @@ public class UserService {
     }
 
     @Transactional(readOnly = false)
-    public User createUser(CreateUserRequestDto req) {
+    public UserDto createUser(CreateUserRequestDto req) {
         if (StringUtils.isEmpty(req.username)) {
             throw new ResponseCodeException(HttpStatus.BAD_REQUEST, "Username not provided");
         }
-        if (StringUtils.isEmpty(req.passwordHash)) {
+        if (StringUtils.isEmpty(req.password)) {
             throw new ResponseCodeException(HttpStatus.BAD_REQUEST, "Password not provided");
         }
         if (isUsernameTaken(req.username)) {
@@ -58,18 +63,19 @@ public class UserService {
         User user = new User();
         user.setUsername(req.username);
         user.setEmail(req.email);
-        user.setPasswordHash(req.passwordHash);
+        String passwordHash = passwordUtil.hashPassword(req.password);
+        user.setPasswordHash(passwordHash);
         userRepository.save(user);
-        return user;
+        return new UserDto(user);
     }
 
     @Transactional(readOnly = false)
-    public User updateUser(Long id, UpdateUserRequestDto req) {
+    public UserDto updateUser(Long id, UpdateUserRequestDto req) {
         User user = getUser(id);
         if (StringUtils.isEmpty(req.username)) {
             throw new ResponseCodeException(HttpStatus.BAD_REQUEST, "Username must be provided");
         }
-        if (StringUtils.isEmpty(req.passwordHash)) {
+        if (StringUtils.isEmpty(req.password)) {
             throw new ResponseCodeException(HttpStatus.BAD_REQUEST, "Password must be provided");
         }
         if (!req.username.equals(user.getUsername()) && isUsernameTaken(req.username)) {
@@ -81,7 +87,7 @@ public class UserService {
         user.setEmail(req.email);
 
         userRepository.save(user);
-        return user;
+        return new UserDto(user);
     }
 
     @Transactional(readOnly = false)

@@ -27,6 +27,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'signin',
+        loadComponent: () =>
+          import('./auth/sign-in/sign-in.component').then(
+            (m) => m.SignInComponent
+          ),
+      },
+      {
         path: 'profile',
         loadComponent: () =>
           import('./profile/profile.component').then((m) => m.ProfileComponent),

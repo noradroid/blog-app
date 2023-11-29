@@ -1,0 +1,24 @@
+<app-form-layout
+  id="signin"
+  [form]="form.control"
+  [submitFn]="submitFn"
+  [errorFn]="errorFn"
+>
+  <ng-container title>Sign in</ng-container>
+  <ng-container form>
+    <form id="signin" #form="ngForm" appFormStyling>
+      <app-username
+        [(value)]="model.username"
+        [validate]="false"
+      ></app-username>
+      <app-password
+        [(value)]="model.password"
+        [validate]="false"
+      ></app-password>
+    </form>
+  </ng-container>
+</app-form-layout>
+
+<div class="mt-3">
+  Don't have an account? Sign up <a [routerLink]="['/signup']">here</a>
+</div>

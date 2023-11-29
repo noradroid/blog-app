@@ -6,8 +6,7 @@ import { RouterLink } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 
 import { AuthService } from 'src/app/core/auth/auth.service';
-import { UserRequestDto } from 'src/app/data/user/dto/user-request.model';
-import { UserHttpService } from 'src/app/data/user/user.http.service';
+import { LoginRequestDto } from 'src/app/core/auth/login-request.model';
 import { User } from 'src/app/data/user/user.model';
 import { PasswordInputComponent } from 'src/app/shared/form/fields/password/password.component';
 import { UsernameInputComponent } from 'src/app/shared/form/fields/username/username.component';
@@ -15,7 +14,7 @@ import { FormLayoutComponent } from 'src/app/shared/form/form-layout/form-layout
 import { FormStylingDirective } from 'src/app/shared/form/form-styling/form-styling.directive';
 
 @Component({
-  selector: 'app-sign-up',
+  selector: 'app-sign-in',
   standalone: true,
   imports: [
     CommonModule,
@@ -26,30 +25,25 @@ import { FormStylingDirective } from 'src/app/shared/form/form-styling/form-styl
     PasswordInputComponent,
     RouterLink,
   ],
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss'],
+  templateUrl: './sign-in.component.html',
+  styleUrls: ['./sign-in.component.scss'],
 })
-export class SignUpComponent {
+export class SignInComponent {
   model = {
     username: '',
     password: '',
   };
 
-  constructor(
-    private service: UserHttpService,
-    private authService: AuthService
-  ) {}
+  constructor(private authService: AuthService) {}
 
   submitFn: (form: FormGroup) => Observable<User> = (
     form: FormGroup
   ): Observable<User> => {
-    const model: UserRequestDto = {
-      username: form.value.username.trim(),
+    const model: LoginRequestDto = {
+      username: form.value.username,
       password: form.value.password,
     };
-    return this.service
-      .create(model)
-      .pipe(switchMap((user) => this.authService.login(model)));
+    return this.authService.login(model);
   };
 
   errorFn: (err: HttpErrorResponse) => string = (

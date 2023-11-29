@@ -1,5 +1,5 @@
 export type UserRequestDto = {
   username: string;
-  passwordHash: string;
+  password: string;
   email?: string;
 };

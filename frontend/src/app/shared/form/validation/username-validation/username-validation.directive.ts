@@ -6,7 +6,7 @@ import {
   Validator,
   Validators,
 } from '@angular/forms';
-import { USERNAME_VALIDATION_PATTERNS_MESSAGES } from './username-validation';
+import { USERNAME_VALIDATION_PATTERNS_MSGS } from './username-validation';
 
 @Directive({
   selector: '[appUsernameValidation]',
@@ -33,7 +33,7 @@ export class UsernameValidationDirective implements Validator {
       return null;
     }
 
-    return USERNAME_VALIDATION_PATTERNS_MESSAGES.map((pattern) => {
+    return USERNAME_VALIDATION_PATTERNS_MSGS.map((pattern) => {
       const error = Validators.pattern(pattern.pattern)(control);
       return error ? { [pattern.name]: true } : null;
     }).reduce((prev, curr) => {

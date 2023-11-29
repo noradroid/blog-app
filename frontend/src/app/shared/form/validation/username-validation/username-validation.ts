@@ -1,6 +1,6 @@
 import { ValidationPatternMsg } from '../validation-pattern-msg.type';
 
-export const USERNAME_VALIDATION_PATTERNS_MESSAGES: ValidationPatternMsg[] = [
+export const USERNAME_VALIDATION_PATTERNS_MSGS: ValidationPatternMsg[] = [
   {
     name: 'alphanumericUnderscore',
     pattern: /^\w+$/,

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FormGroup } from '@angular/forms';
 import {
   Observable,
   catchError,
@@ -24,7 +25,8 @@ import { LoaderComponent } from '../../loader/loader.component';
 })
 export class SubmitButtonComponent {
   @Input() id: string = 'form';
-  @Input() submitFn!: () => Observable<any>;
+  @Input() form!: FormGroup;
+  @Input() submitFn!: (form: FormGroup) => Observable<any>;
   @Input() errorFn!: (err: HttpErrorResponse) => string;
   @Output() completeEvent = new EventEmitter<void>();
   loading = false;
@@ -32,25 +34,27 @@ export class SubmitButtonComponent {
   error: string = '';
 
   handleClick(): void {
-    this.loading = true;
-    this.error = '';
-    this.submitFn()
-      .pipe(
-        catchError((err) => of(err)),
-        combineLatestWith(timer(DELAY)),
-        map(([res, _]) => res)
-      )
-      .subscribe({
-        next: (res) => {
-          this.loading = false;
-          if (res instanceof HttpErrorResponse) {
-            this.error = this.errorFn(res);
-          } else {
-            this.error = '';
-          }
-          this.completeEvent.emit();
-        },
-        error: (err) => {},
-      });
+    if (this.form.valid) {
+      this.loading = true;
+      this.error = '';
+      this.submitFn(this.form)
+        .pipe(
+          catchError((err) => of(err)),
+          combineLatestWith(timer(DELAY)),
+          map(([res, _]) => res)
+        )
+        .subscribe({
+          next: (res) => {
+            this.loading = false;
+            if (res instanceof HttpErrorResponse) {
+              this.error = this.errorFn(res);
+            } else {
+              this.error = '';
+            }
+            this.completeEvent.emit();
+          },
+          error: (err) => {},
+        });
+    }
   }
 }

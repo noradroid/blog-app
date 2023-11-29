@@ -1,6 +1,6 @@
 import { ValidationPatternMsg } from '../validation-pattern-msg.type';
 
-export const PASSWORD_VALIDATION_PATTERNS_MESSAGES: ValidationPatternMsg[] = [
+export const PASSWORD_VALIDATION_PATTERNS_MSGS: ValidationPatternMsg[] = [
   {
     name: 'uppercase',
     pattern: /^.*[A-Z]+.*$/,

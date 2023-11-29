@@ -5,9 +5,13 @@
   <span
     class="material-symbols-outlined text-danger"
     [libTooltip]="
-      onlyFirst ? (ctrl.errors | validationMsg : errorMsgs) : template
+      onlyRequired && ctrl.errors && ctrl.errors['required']
+        ? requiredMsg.msg
+        : onlyFirst
+        ? (ctrl.errors | validationMsg : errorMsgs)
+        : template
     "
-    *ngIf="ctrl.errors"
+    *ngIf="(ctrl.touched || ctrl.dirty) && ctrl.errors"
     >error</span
   >
   <span

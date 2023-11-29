@@ -6,7 +6,7 @@ import {
   Validator,
   Validators,
 } from '@angular/forms';
-import { PASSWORD_VALIDATION_PATTERNS_MESSAGES } from './password-validation';
+import { PASSWORD_VALIDATION_PATTERNS_MSGS } from './password-validation';
 
 @Directive({
   selector: '[appPasswordValidation]',
@@ -27,7 +27,7 @@ export class PasswordValidationDirective implements Validator {
       return null;
     }
 
-    return PASSWORD_VALIDATION_PATTERNS_MESSAGES.map((pattern) => {
+    return PASSWORD_VALIDATION_PATTERNS_MSGS.map((pattern) => {
       const error = Validators.pattern(pattern.pattern)(control);
       return error ? { [pattern.name]: true } : null;
     }).reduce((prev, curr) => {

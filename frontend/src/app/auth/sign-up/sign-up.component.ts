@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormGroup, FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { SHA256 } from 'crypto-js';
 import { Observable, switchMap } from 'rxjs';
 
 import { AuthService } from 'src/app/core/auth/auth.service';
@@ -39,8 +38,13 @@ export class SignUpComponent {
     private authService: AuthService
   ) {}
 
-  submitFn: () => Observable<User> = (): Observable<User> => {
-    const model = this.convertToUserRequestDto();
+  submitFn: (form: FormGroup) => Observable<User> = (
+    form: FormGroup
+  ): Observable<User> => {
+    const model: UserRequestDto = {
+      username: form.value.username.trim(),
+      password: form.value.password,
+    };
     return this.service
       .create(model)
       .pipe(switchMap((user) => this.authService.login(model)));
@@ -55,11 +59,4 @@ export class SignUpComponent {
       return 'Client side error';
     }
   };
-
-  convertToUserRequestDto(): UserRequestDto {
-    return {
-      username: this.model.username,
-      passwordHash: SHA256(this.model.password).toString(),
-    };
-  }
 }

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormGroup } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { SubmitButtonComponent } from '../submit-button/submit-button.component';
@@ -13,6 +14,7 @@ import { SubmitButtonComponent } from '../submit-button/submit-button.component'
 })
 export class FormLayoutComponent {
   @Input() id: string = 'form';
-  @Input() submitFn!: () => Observable<any>;
+  @Input() form!: FormGroup;
+  @Input() submitFn!: (form: FormGroup) => Observable<any>;
   @Input() errorFn!: (err: HttpErrorResponse) => string;
 }

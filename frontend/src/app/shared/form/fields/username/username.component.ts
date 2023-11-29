@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlContainer, FormsModule, NgForm } from '@angular/forms';
+import { USERNAME_VALIDATION_PATTERNS_MSGS } from '../../validation/username-validation/username-validation';
 import { UsernameValidationDirective } from '../../validation/username-validation/username-validation.directive';
 import { ValidationIconComponent } from '../../validation/validation-icon/validation-icon.component';
 import { ValidationMsg } from '../../validation/validation-msg.type';
-import { USERNAME_VALIDATION_PATTERNS_MESSAGES } from '../../validation/username-validation/username-validation';
 
 @Component({
   selector: 'app-username',
@@ -27,7 +27,7 @@ import { USERNAME_VALIDATION_PATTERNS_MESSAGES } from '../../validation/username
 export class UsernameInputComponent {
   @Input()
   set value(val: string) {
-    this._value = val.trim();
+    this._value = val;
   }
   get value(): string {
     return this._value;
@@ -36,5 +36,5 @@ export class UsernameInputComponent {
   @Output() valueChange = new EventEmitter<string>();
   @Input() validate: boolean = false;
 
-  errorMsgs: ValidationMsg[] = USERNAME_VALIDATION_PATTERNS_MESSAGES;
+  errorMsgs: ValidationMsg[] = USERNAME_VALIDATION_PATTERNS_MSGS;
 }

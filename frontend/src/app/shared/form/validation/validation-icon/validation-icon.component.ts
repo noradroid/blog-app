@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl } from '@angular/forms';
 import { TooltipModule } from 'tooltip';
+import { REQUIRED_MSG } from '../generic-required-validation';
 import { ValidationMsg } from '../validation-msg.type';
 import { ValidationMsgPipe } from './validation-msg.pipe';
 
@@ -14,6 +15,8 @@ import { ValidationMsgPipe } from './validation-msg.pipe';
 })
 export class ValidationIconComponent {
   @Input() ctrl!: FormControl;
+  @Input() onlyRequired: boolean = true; // Display the 'required' error by itself if it is flagged, otherwise, follow other rules
+  @Input() onlyFirst: boolean = true; // Only display the first error flagged by validation
   @Input() errorMsgs: ValidationMsg[] = [];
-  @Input() onlyFirst: boolean = true;
+  @Input() requiredMsg: ValidationMsg = REQUIRED_MSG;
 }

@@ -1,4 +1,9 @@
-<app-form-layout [id]="'eyed'" [submitFn]="submitFn" [errorFn]="errorFn">
+<app-form-layout
+  id="signup"
+  [form]="form.control"
+  [submitFn]="submitFn"
+  [errorFn]="errorFn"
+>
   <ng-container title>Sign up</ng-container>
   <ng-container form>
     <form id="signup" #form="ngForm" appFormStyling>

@@ -2,13 +2,13 @@
   <div class="w-100 d-flex justify-content-between align-items-center">
     <div class="d-flex justify-content-start align-items-center w-100 gap-3">
       <h2>Create post</h2>
-      <input
-        type="text"
-        name="title"
-        id="title"
-        [(ngModel)]="model.title"
-        placeholder="Enter title"
-      />
+      <form #form="ngForm">
+        <app-input
+          id="title"
+          placeholder="Enter title"
+          [(value)]="model.title"
+        ></app-input>
+      </form>
     </div>
     <lib-button (click)="submit()">Create</lib-button>
   </div>

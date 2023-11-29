@@ -7,12 +7,19 @@ import { ButtonModule } from 'button';
 
 import { PostHttpService } from 'src/app/data/post/post.http.service';
 import { EditorModule } from 'src/app/shared/editor/editor.module';
+import { InputComponent } from 'src/app/shared/form/fields/input/input.component';
 import { CreateForm } from '../shared/model/create-form.model';
 
 @Component({
   selector: 'app-create',
   standalone: true,
-  imports: [CommonModule, EditorModule, ButtonModule, FormsModule],
+  imports: [
+    CommonModule,
+    EditorModule,
+    ButtonModule,
+    FormsModule,
+    InputComponent,
+  ],
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss'],
 })

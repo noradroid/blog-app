@@ -6,34 +6,28 @@ import {
   Validator,
   Validators,
 } from '@angular/forms';
-import { USERNAME_VALIDATION_PATTERNS_MESSAGES } from './username-validation';
+import { PASSWORD_VALIDATION_PATTERNS_MESSAGES } from './password-validation';
 
 @Directive({
-  selector: '[appUsernameValidation]',
+  selector: '[appPasswordValidation]',
   standalone: true,
   providers: [
     {
       provide: NG_VALIDATORS,
-      useExisting: UsernameValidationDirective,
+      useExisting: PasswordValidationDirective,
       multi: true,
     },
   ],
 })
-export class UsernameValidationDirective implements Validator {
-  @Input() appUsernameValidation: boolean = false;
+export class PasswordValidationDirective implements Validator {
+  @Input() appPasswordValidation: boolean = false;
 
-  /**
-   * @returns Either
-   * { alphanumericUnderscore: true } or
-   * { minThreeLetters: true } or
-   * null.
-   */
-  validate(control: AbstractControl): ValidationErrors | null {
-    if (!this.appUsernameValidation) {
+  validate(control: AbstractControl<any, any>): ValidationErrors | null {
+    if (!this.appPasswordValidation) {
       return null;
     }
 
-    return USERNAME_VALIDATION_PATTERNS_MESSAGES.map((pattern) => {
+    return PASSWORD_VALIDATION_PATTERNS_MESSAGES.map((pattern) => {
       const error = Validators.pattern(pattern.pattern)(control);
       return error ? { [pattern.name]: true } : null;
     }).reduce((prev, curr) => {

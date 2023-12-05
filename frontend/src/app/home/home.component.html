@@ -15,11 +15,16 @@
   </button>
 </div>
 
-<div class="mt-4">
+<div class="mt-4 d-flex flex-column gap-3">
   <ng-container *appHttpConnectionError="posts$">
     <ng-container *ngFor="let post of posts$ | async">
-      <h2>{{ post.title }}</h2>
-      <div>{{ post.content }}</div>
+      <div>
+        <h2 class="mb-2">{{ post.title }}</h2>
+        <div>{{ post.content }}</div>
+        <div class="mt-1">
+          Last updated: {{ post.lastModifiedDate | date : "medium" }}
+        </div>
+      </div>
     </ng-container>
   </ng-container>
 </div>

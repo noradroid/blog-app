@@ -19,6 +19,7 @@ export class InputComponent {
   @Input()
   set value(val: string) {
     this._value = val;
+    this.valueChange.emit(this._value);
   }
   get value(): string {
     return this._value;

@@ -65,4 +65,9 @@ public class LoggedInService {
         Optional<LoggedIn> opt = loggedInRepository.findByUser(user);
         return opt.isPresent();
     }
+
+    @Transactional(readOnly = false)
+    public void deleteAllSessions() {
+        loggedInRepository.deleteAll();
+    }
 }

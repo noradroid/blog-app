@@ -9,7 +9,7 @@ import { LoginRequestDto } from './login-request.model';
   providedIn: 'root',
 })
 export class AuthService {
-  private ENDPOINT = URL.concat('/li');
+  private ENDPOINT = URL.concat('/auth');
   private user = new BehaviorSubject<User | null>(null);
   public user$ = this.user.asObservable();
 

@@ -27,8 +27,8 @@ export class SubmitButtonComponent {
   @Input() id: string = 'form';
   @Input() form!: FormGroup;
   @Input() submitFn!: (form: FormGroup) => Observable<any>;
+  @Input() completeFn!: (res: any) => void;
   @Input() errorFn!: (err: HttpErrorResponse) => string;
-  @Output() completeEvent = new EventEmitter<void>();
   loading = false;
 
   error: string = '';
@@ -50,8 +50,8 @@ export class SubmitButtonComponent {
               this.error = this.errorFn(res);
             } else {
               this.error = '';
+              this.completeFn(res);
             }
-            this.completeEvent.emit();
           },
           error: (err) => {},
         });

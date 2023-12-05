@@ -16,5 +16,6 @@ export class FormLayoutComponent {
   @Input() id: string = 'form';
   @Input() form!: FormGroup;
   @Input() submitFn!: (form: FormGroup) => Observable<any>;
+  @Input() completeFn!: (res: any) => void;
   @Input() errorFn!: (err: HttpErrorResponse) => string;
 }

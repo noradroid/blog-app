@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { RouterLink } from '@angular/router';
-import { Observable, switchMap } from 'rxjs';
+import { Router, RouterLink } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { LoginRequestDto } from 'src/app/core/auth/login-request.model';
@@ -34,7 +34,7 @@ export class SignInComponent {
     password: '',
   };
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   submitFn: (form: FormGroup) => Observable<User> = (
     form: FormGroup
@@ -44,6 +44,10 @@ export class SignInComponent {
       password: form.value.password,
     };
     return this.authService.login(model);
+  };
+
+  completeFn: (res: User) => void = (res: User): void => {
+    this.router.navigate(['/']);
   };
 
   errorFn: (err: HttpErrorResponse) => string = (

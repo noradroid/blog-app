@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 
 import { AuthService } from 'src/app/core/auth/auth.service';
@@ -37,7 +37,8 @@ export class SignUpComponent {
 
   constructor(
     private service: UserHttpService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   submitFn: (form: FormGroup) => Observable<User> = (
@@ -50,6 +51,10 @@ export class SignUpComponent {
     return this.service
       .create(model)
       .pipe(switchMap((user) => this.authService.login(model)));
+  };
+
+  completeFn: (res: User) => void = (res: User): void => {
+    this.router.navigate(['/']);
   };
 
   errorFn: (err: HttpErrorResponse) => string = (

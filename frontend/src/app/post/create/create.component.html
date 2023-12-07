@@ -13,7 +13,7 @@
 
   <div class="h-100 w-100 mt-3 border border-black d-flex flex-column">
     <div
-      class="actions-bar border-bottom border-black w-100 py-2 d-flex justify-content-start align-items-center gap-2"
+      class="actions-bar border-bottom border-black w-100 py-2 d-flex justify-content-start align-items-center gap-2 px-3"
     >
       <app-font-size-selector></app-font-size-selector>
       <app-bold></app-bold>
@@ -22,12 +22,19 @@
       <app-numbered-list></app-numbered-list>
       <app-bullet-list></app-bullet-list>
     </div>
-    <textarea
+    <div
+      id="content"
+      name="content"
+      class="w-100 d-flex flex-fill p-3"
+      contenteditable="true"
+      [(ngModel)]="model.content"
+    ></div>
+    <!-- <textarea
       name="content"
       id="content"
       class="w-100 d-flex flex-fill"
       [(ngModel)]="model.content"
       placeholder="Enter content"
-    ></textarea>
+    ></textarea> -->
   </div>
 </form>

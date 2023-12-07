@@ -6,3 +6,7 @@ textarea {
 input {
   outline: none;
 }
+
+*[contenteditable="true"] {
+  outline: none;
+}

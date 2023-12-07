@@ -1,3 +1,7 @@
-<button (click)="toggle()" [ngClass]="active ? 'bg-dark-subtle' : ''">
+<button
+  [ngClass]="active ? 'bg-dark-subtle' : ''"
+  (click)="toggle()"
+  (mousedown)="$event.preventDefault()"
+>
   <span class="material-symbols-outlined">format_bold</span>
 </button>

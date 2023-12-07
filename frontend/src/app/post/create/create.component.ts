@@ -26,6 +26,7 @@ import { CreateForm } from '../shared/model/create-form.model';
 export class CreateComponent {
   model: CreateForm = {
     title: '',
+    description: '',
     content: '',
   };
 

@@ -6,6 +6,7 @@ import { FontSizeSelectorComponent } from './font-size-selector/font-size-select
 import { ItalicComponent } from './italic/italic.component';
 import { NumberedListComponent } from './numbered-list/numbered-list.component';
 import { UnderlineComponent } from './underline/underline.component';
+import { TextareaComponent } from './textarea/textarea.component';
 
 @NgModule({
   exports: [
@@ -15,6 +16,7 @@ import { UnderlineComponent } from './underline/underline.component';
     UnderlineComponent,
     NumberedListComponent,
     BulletListComponent,
+    TextareaComponent,
   ],
   imports: [
     FontSizeSelectorComponent,
@@ -23,6 +25,7 @@ import { UnderlineComponent } from './underline/underline.component';
     UnderlineComponent,
     NumberedListComponent,
     BulletListComponent,
+    TextareaComponent,
   ],
 })
 export class EditorModule {}

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { EditorService } from '../editor.service';
 
 @Component({
@@ -8,9 +9,23 @@ import { EditorService } from '../editor.service';
   imports: [CommonModule],
   templateUrl: './textarea.component.html',
   styleUrls: ['./textarea.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: TextareaComponent,
+      multi: true,
+    },
+  ],
 })
-export class TextareaComponent {
-  value = '';
+export class TextareaComponent implements ControlValueAccessor {
+  set value(value: string) {
+    this._value = value;
+    console.log(value);
+  }
+  get value(): string {
+    return this._value;
+  }
+  _value = '';
 
   constructor(private service: EditorService) {
     this.service.bold$.subscribe((bold) => {
@@ -36,7 +51,22 @@ export class TextareaComponent {
     });
   }
 
-  change(event: any): void {
-    console.log(event);
+  writeValue(value: string): void {
+    this.value = value;
+  }
+
+  onChange = (value: string) => {};
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  onTouched = () => {};
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  disabled = false;
+  setDisabledState(disabled: boolean): void {
+    this.disabled = disabled;
   }
 }

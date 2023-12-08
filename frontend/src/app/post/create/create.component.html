@@ -33,7 +33,12 @@
       <app-format-options
         class="w-100 border-bottom border-black"
       ></app-format-options>
-      <app-textarea class="w-100 d-flex flex-fill"></app-textarea>
+      <app-textarea
+        id="content"
+        name="content"
+        class="w-100 d-flex flex-fill"
+        [(ngModel)]="model.content"
+      ></app-textarea>
       <!-- <textarea
       name="content"
       id="content"

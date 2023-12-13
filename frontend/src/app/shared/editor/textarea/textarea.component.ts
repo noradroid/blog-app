@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { EditorService } from '../editor.service';
 
@@ -18,14 +18,7 @@ import { EditorService } from '../editor.service';
   ],
 })
 export class TextareaComponent implements ControlValueAccessor {
-  set value(value: string) {
-    this._value = value;
-    console.log(value);
-  }
-  get value(): string {
-    return this._value;
-  }
-  _value = '';
+  @ViewChild('content') content!: ElementRef;
 
   constructor(private service: EditorService) {
     this.service.bold$.subscribe((bold) => {
@@ -52,20 +45,22 @@ export class TextareaComponent implements ControlValueAccessor {
   }
 
   writeValue(value: string): void {
-    this.value = value;
+    this.content.nativeElement.value = value;
+    console.log(value);
   }
 
   onChange = (value: string) => {};
+  onTouched = () => {};
+  disabled = false;
+
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
-  onTouched = () => {};
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
 
-  disabled = false;
   setDisabledState(disabled: boolean): void {
     this.disabled = disabled;
   }

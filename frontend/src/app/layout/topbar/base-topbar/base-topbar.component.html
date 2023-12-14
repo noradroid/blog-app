@@ -2,10 +2,9 @@
   class="container d-flex align-items-center justify-content-between p-3 border-bottom border-black bg-white"
 >
   <div class="d-flex align-items-center gap-4">
-    <app-tab name="Home" [route]="['/']"></app-tab>
-    <app-tab name="My Page"></app-tab>
+    <ng-content select="[left]"></ng-content>
   </div>
   <div class="d-flex align-items-center gap-4">
-    <app-tab name="My Profile" (click)="gotoProfile()"></app-tab>
+    <ng-content select="[right]"></ng-content>
   </div>
 </div>

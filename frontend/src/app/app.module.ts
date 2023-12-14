@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { TopbarComponent } from './layout/topbar/topbar.component';
+import { TopbarComponent } from './layout/topbar/topbar/topbar.component';
 
 @NgModule({
   declarations: [AppComponent],

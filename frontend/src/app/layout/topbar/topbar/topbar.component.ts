@@ -1,15 +1,17 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { User } from 'src/app/data/user/user.model';
-import { TabComponent } from './tab/tab.component';
+import { PublicTopbarComponent } from '../public-topbar/public-topbar.component';
+import { UserTopbarComponent } from '../user-topbar/user-topbar.component';
 
 @Component({
   selector: 'app-topbar',
   standalone: true,
-  imports: [CommonModule, TabComponent],
+  imports: [CommonModule, PublicTopbarComponent, UserTopbarComponent],
   templateUrl: './topbar.component.html',
   styleUrls: ['./topbar.component.scss'],
 })

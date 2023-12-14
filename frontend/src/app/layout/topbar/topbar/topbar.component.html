@@ -1,0 +1,5 @@
+<app-user-topbar *ngIf="user$ | async; else public"></app-user-topbar>
+
+<ng-template #public>
+  <app-public-topbar></app-public-topbar>
+</ng-template>

@@ -20,7 +20,7 @@
     <ng-container *ngFor="let post of posts$ | async">
       <div>
         <h2 class="mb-2">{{ post.title }}</h2>
-        <div>{{ post.content }}</div>
+        <div [innerHtml]="post.content"></div>
         <div class="mt-1">
           Last updated: {{ post.lastModifiedDate | date : "medium" }}
         </div>

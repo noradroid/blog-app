@@ -1,0 +1,13 @@
+<div class="d-flex flex-column gap-3">
+  <ng-container *appHttpConnectionError="posts$">
+    <ng-container *ngFor="let post of posts$ | async">
+      <div>
+        <h2 class="mb-2">{{ post.title }}</h2>
+        <div [innerHtml]="post.content"></div>
+        <div class="mt-1 fs-7">
+          Last updated: {{ post.lastModifiedDate | date : "medium" }}
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>

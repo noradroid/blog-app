@@ -1,10 +1,8 @@
 package com.example.blog.resource;
 
 import com.example.blog.service.CommentService;
-import com.example.blog.service.PostService;
 import com.example.blog.service.UserService;
 import com.example.blog.service.dto.comment.CommentDto;
-import com.example.blog.service.dto.post.PostDto;
 import com.example.blog.service.dto.user.CreateUserRequestDto;
 import com.example.blog.service.dto.user.UpdateUserRequestDto;
 import com.example.blog.service.dto.user.UserDto;
@@ -33,9 +31,6 @@ public class UserResource {
     UserService userService;
 
     @Autowired
-    PostService postService;
-
-    @Autowired
     CommentService commentService;
 
     @GetMapping()
@@ -57,16 +52,6 @@ public class UserResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
-    }
-
-    @Operation(summary = "Get posts by user")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK"),
-            @ApiResponse(responseCode = "404", description = "User not found")
-    })
-    @GetMapping("/{id}/posts")
-    public ResponseEntity<List<PostDto>> getUserPosts(@PathVariable("id") Long id) {
-        return new ResponseEntity<>(postService.getPostsByUser(id), HttpStatus.OK);
     }
 
     @Operation(summary = "Get comments by user")

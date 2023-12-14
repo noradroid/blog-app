@@ -33,4 +33,8 @@ export class PostHttpService {
   getById(id: number): Observable<Post> {
     return this.http.get<Post>(this.ENDPOINT.concat(String(id)));
   }
+
+  getAllByUserId(id: number): Observable<Post[]> {
+    return this.http.get<Post[]>(this.ENDPOINT.concat(`?user=${id}`));
+  }
 }

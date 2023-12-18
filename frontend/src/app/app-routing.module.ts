@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { authResolver } from './core/auth/auth-resolver/auth-resolver';
 import { postResolver } from './data/post/resolver/post-resolver';
 
 const routes: Routes = [
@@ -17,6 +18,9 @@ const routes: Routes = [
     path: 'post/create',
     loadComponent: () =>
       import('./post/create/create.component').then((m) => m.CreateComponent),
+    resolve: {
+      user: authResolver,
+    },
   },
   {
     path: 'post/:id',

@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ButtonModule } from 'button';
 
 import { PostHttpService } from 'src/app/data/post/post.http.service';
+import { User } from 'src/app/data/user/user.model';
 import { EditorModule } from 'src/app/shared/editor/editor.module';
 import { InputComponent } from 'src/app/shared/form/fields/input/input.component';
 import { CreateForm } from '../shared/model/create-form.model';
@@ -24,24 +25,29 @@ import { CreateForm } from '../shared/model/create-form.model';
   styleUrls: ['./create.component.scss'],
 })
 export class CreateComponent {
+  user!: User;
   model: CreateForm = {
     title: '',
     description: '',
     content: '',
   };
 
-  service = inject(PostHttpService);
-
-  router = inject(Router);
+  constructor(
+    private service: PostHttpService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.route.data.subscribe((data) => (this.user = data['user']));
+  }
 
   submit(): void {
     this.service
       .create({
         ...this.model,
-        userId: 1,
+        userId: this.user.id,
       })
-      .subscribe();
-
-    this.router.navigate(['/']);
+      .subscribe((post) => {
+        this.router.navigate(['/post', post.id]);
+      });
   }
 }

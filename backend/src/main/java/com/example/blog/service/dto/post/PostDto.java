@@ -2,6 +2,7 @@ package com.example.blog.service.dto.post;
 
 import com.example.blog.constants.StatusConstants;
 import com.example.blog.domain.Post;
+import com.example.blog.service.dto.user.UserDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.Instant;
 import lombok.Data;
@@ -19,7 +20,7 @@ public class PostDto {
     String content;
 
     @JsonProperty
-    Long userId;
+    UserDto user;
 
     @JsonProperty
     Instant createdDate;
@@ -37,7 +38,7 @@ public class PostDto {
         // Don't share extra information if post is deleted
         if (active.equals(StatusConstants.ACTIVE)) {
             this.content = post.getContent();
-            this.userId = post.getUser().getId();
+            this.user = new UserDto(post.getUser());
             this.createdDate = post.getCreatedDate();
             this.lastModifiedDate = post.getLastModifiedDate();
         }

@@ -1,1 +1,7 @@
-<p>post-page works!</p>
+<div class="d-flex flex-column gap-3">
+  <h1>{{ post.title }}</h1>
+  <div class="fs-7">
+    Last updated: {{ post.lastModifiedDate | date : "medium" }}
+  </div>
+  <div [innerHtml]="post.content"></div>
+</div>

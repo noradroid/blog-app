@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { postResolver } from './data/post/resolver/post-resolver';
 
 const routes: Routes = [
   {
@@ -16,6 +17,16 @@ const routes: Routes = [
     path: 'post/create',
     loadComponent: () =>
       import('./post/create/create.component').then((m) => m.CreateComponent),
+  },
+  {
+    path: 'post/:id',
+    loadComponent: () =>
+      import('./post/post-page/post-page.component').then(
+        (m) => m.PostPageComponent
+      ),
+    resolve: {
+      post: postResolver,
+    },
   },
   {
     path: '',

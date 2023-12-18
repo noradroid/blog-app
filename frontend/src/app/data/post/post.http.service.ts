@@ -19,11 +19,14 @@ export class PostHttpService {
   }
 
   update(id: number, model: PostRequestDto): Observable<Post> {
-    return this.http.put<Post>(this.ENDPOINT.concat(String(id)), model);
+    return this.http.put<Post>(
+      this.ENDPOINT.concat('/').concat(String(id)),
+      model
+    );
   }
 
   delete(id: number): Observable<void> {
-    return this.http.delete<void>(this.ENDPOINT.concat(String(id)));
+    return this.http.delete<void>(this.ENDPOINT.concat('/').concat(String(id)));
   }
 
   getAll(): Observable<Post[]> {
@@ -31,7 +34,7 @@ export class PostHttpService {
   }
 
   getById(id: number): Observable<Post> {
-    return this.http.get<Post>(this.ENDPOINT.concat(String(id)));
+    return this.http.get<Post>(this.ENDPOINT.concat('/').concat(String(id)));
   }
 
   getAllByUserId(id: number): Observable<Post[]> {

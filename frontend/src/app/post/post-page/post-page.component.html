@@ -2,5 +2,6 @@
   <h1>{{ post.title }}</h1>
   <div class="fs-7">Updated {{ post.lastModifiedDate | date : "medium" }}</div>
   <div class="fs-7">Posted by {{ post.user.username }}</div>
+  <img class="d-block" src="https://picsum.photos/300/200" />
   <div [innerHtml]="post.content"></div>
 </div>

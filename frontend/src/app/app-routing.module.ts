@@ -7,56 +7,67 @@ const routes: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./home/home.component').then((m) => m.HomeComponent),
-  },
-  {
-    path: 'my-page',
-    loadComponent: () =>
-      import('./my-page/my-page.component').then((m) => m.MyPageComponent),
-  },
-  {
-    path: 'post/create',
-    loadComponent: () =>
-      import('./post/create/create.component').then((m) => m.CreateComponent),
-    resolve: {
-      user: authResolver,
-    },
-  },
-  {
-    path: 'post/:id',
-    loadComponent: () =>
-      import('./post/post-page/post-page.component').then(
-        (m) => m.PostPageComponent
-      ),
-    resolve: {
-      post: postResolver,
-    },
-  },
-  {
-    path: '',
-    loadComponent: () =>
-      import('./layout/box-layout/box-layout.component').then(
-        (m) => m.BoxLayoutComponent
-      ),
+      import('./layout/layout/layout.component').then((m) => m.LayoutComponent),
     children: [
       {
-        path: 'signup',
+        path: '',
         loadComponent: () =>
-          import('./auth/sign-up/sign-up.component').then(
-            (m) => m.SignUpComponent
-          ),
+          import('./home/home.component').then((m) => m.HomeComponent),
       },
       {
-        path: 'signin',
+        path: 'my-page',
         loadComponent: () =>
-          import('./auth/sign-in/sign-in.component').then(
-            (m) => m.SignInComponent
-          ),
+          import('./my-page/my-page.component').then((m) => m.MyPageComponent),
       },
       {
-        path: 'profile',
+        path: 'post/create',
         loadComponent: () =>
-          import('./profile/profile.component').then((m) => m.ProfileComponent),
+          import('./post/create/create.component').then(
+            (m) => m.CreateComponent
+          ),
+        resolve: {
+          user: authResolver,
+        },
+      },
+      {
+        path: 'post/:id',
+        loadComponent: () =>
+          import('./post/post-page/post-page.component').then(
+            (m) => m.PostPageComponent
+          ),
+        resolve: {
+          post: postResolver,
+        },
+      },
+      {
+        path: '',
+        loadComponent: () =>
+          import('./layout/box-layout/box-layout.component').then(
+            (m) => m.BoxLayoutComponent
+          ),
+        children: [
+          {
+            path: 'signup',
+            loadComponent: () =>
+              import('./auth/sign-up/sign-up.component').then(
+                (m) => m.SignUpComponent
+              ),
+          },
+          {
+            path: 'signin',
+            loadComponent: () =>
+              import('./auth/sign-in/sign-in.component').then(
+                (m) => m.SignInComponent
+              ),
+          },
+          {
+            path: 'profile',
+            loadComponent: () =>
+              import('./profile/profile.component').then(
+                (m) => m.ProfileComponent
+              ),
+          },
+        ],
       },
     ],
   },

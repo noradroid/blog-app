@@ -12,9 +12,7 @@ import { User } from '../data/user/user.model';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent {
-  user$: Observable<User | null> = this.route.data.pipe(
-    map((data) => data['user'])
-  );
+  user$: Observable<User> = this.route.data.pipe(map((data) => data['user']));
 
   constructor(private route: ActivatedRoute) {}
 }

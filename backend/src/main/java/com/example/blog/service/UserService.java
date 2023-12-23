@@ -47,6 +47,11 @@ public class UserService {
         return opt.get();
     }
 
+    @Transactional(readOnly = true)
+    public UserDto getUserDtoByUsername(String username) {
+        return new UserDto(getUserByUsername(username));
+    }
+
     @Transactional(readOnly = false)
     public UserDto createUser(CreateUserRequestDto req) {
         if (StringUtils.isEmpty(req.username)) {

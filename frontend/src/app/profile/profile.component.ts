@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable } from 'rxjs';
-import { AuthService } from '../core/auth/auth.service';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, map } from 'rxjs';
 import { User } from '../data/user/user.model';
 
 @Component({
@@ -12,7 +12,9 @@ import { User } from '../data/user/user.model';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent {
-  user$: Observable<User | null> = this.authService.user$;
+  user$: Observable<User | null> = this.route.data.pipe(
+    map((data) => data['user'])
+  );
 
-  constructor(private authService: AuthService) {}
+  constructor(private route: ActivatedRoute) {}
 }

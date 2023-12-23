@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { authResolver } from './core/auth/auth-resolver/auth-resolver';
-import { postResolver } from './data/post/resolver/post-resolver';
+import { postResolver } from './data/post/resolver/post.resolver';
+import { userResolver } from './data/user/resolver/user.resolver';
 
 const routes: Routes = [
   {
@@ -66,6 +67,16 @@ const routes: Routes = [
               import('./profile/profile.component').then(
                 (m) => m.ProfileComponent
               ),
+          },
+          {
+            path: 'u/:username',
+            loadComponent: () =>
+              import('./profile/profile.component').then(
+                (m) => m.ProfileComponent
+              ),
+            resolve: {
+              user: userResolver,
+            },
           },
         ],
       },

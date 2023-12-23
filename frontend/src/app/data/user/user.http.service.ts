@@ -29,4 +29,10 @@ export class UserHttpService {
   getAll(): Observable<User[]> {
     return this.http.get<User[]>(this.ENDPOINT);
   }
+
+  getByUsername(username: string): Observable<User> {
+    return this.http.get<User>(
+      this.ENDPOINT.concat('/').concat('username').concat('/').concat(username)
+    );
+  }
 }

@@ -38,6 +38,12 @@ public class UserResource {
         return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
     }
 
+    @Operation(summary = "Get user by username")
+    @GetMapping("/username/{username}")
+    public ResponseEntity<UserDto> getUserByUsername(@PathVariable("username") String username) {
+        return new ResponseEntity<>(userService.getUserDtoByUsername(username), HttpStatus.OK);
+    }
+
     @PostMapping()
     public ResponseEntity<UserDto> createUser(@RequestBody CreateUserRequestDto req) {
         return new ResponseEntity<>(userService.createUser(req), HttpStatus.CREATED);

@@ -67,6 +67,9 @@ const routes: Routes = [
               import('./profile/profile.component').then(
                 (m) => m.ProfileComponent
               ),
+            resolve: {
+              user: userResolver,
+            },
           },
           {
             path: 'u/:username',

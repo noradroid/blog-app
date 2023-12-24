@@ -1,5 +1,5 @@
 <div class="d-flex flex-column">
-  <label [for]="id" class="mb-1">
+  <label [for]="id" class="mb-1" *ngIf="label">
     <strong>{{ label }}</strong>
   </label>
   <input

@@ -1,14 +1,13 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Post } from 'src/app/data/post/post.model';
+import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { CommentSectionComponent } from 'src/app/comment/comment-section/comment-section.component';
 import { PostComponent } from '../post/post.component';
-import { CommentsComponent } from 'src/app/comments/comments.component';
 
 @Component({
   selector: 'app-post-page',
   standalone: true,
-  imports: [CommonModule, RouterLink, PostComponent, CommentsComponent],
+  imports: [CommonModule, RouterLink, PostComponent, CommentSectionComponent],
   templateUrl: './post-page.component.html',
   styleUrls: ['./post-page.component.scss'],
 })

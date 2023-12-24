@@ -19,20 +19,21 @@ import { TooltipComponent } from './tooltip.component';
  * When no content - show to false
  */
 @Directive({
-  selector: '[libTooltip]',
+  selector: '[appTooltip]',
+  standalone: true,
 })
 export class TooltipDirective implements AfterViewInit, OnDestroy {
   @Input()
-  set libTooltip(value: string | TemplateRef<any> | null) {
-    this._libTooltip = value;
+  set appTooltip(value: string | TemplateRef<any> | null) {
+    this._appTooltip = value;
     if (this.hovered) {
       this.updateTooltip();
     }
   }
-  get libTooltip(): string | TemplateRef<any> | null {
-    return this._libTooltip;
+  get appTooltip(): string | TemplateRef<any> | null {
+    return this._appTooltip;
   }
-  _libTooltip: string | TemplateRef<any> | null = null;
+  _appTooltip: string | TemplateRef<any> | null = null;
 
   tooltipRef?: ComponentRef<TooltipComponent>;
 
@@ -47,13 +48,13 @@ export class TooltipDirective implements AfterViewInit, OnDestroy {
 
   updateTooltip(): void {
     if (this.tooltipRef) {
-      if (this.libTooltip) {
+      if (this.appTooltip) {
         const { left, right, bottom } = (
           this.elementRef.nativeElement as HTMLElement
         ).getBoundingClientRect();
         this.tooltipRef.instance.top = bottom + 5;
         this.tooltipRef.instance.left = (left + right) / 2;
-        this.tooltipRef.instance.tooltip = this.libTooltip;
+        this.tooltipRef.instance.tooltip = this.appTooltip;
       } else {
         this.hideTooltip();
       }

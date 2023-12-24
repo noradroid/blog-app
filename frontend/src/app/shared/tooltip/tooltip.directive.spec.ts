@@ -1,10 +1,10 @@
-import {
-  ComponentFixture,
-  ComponentFixtureAutoDetect,
-  TestBed,
-} from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import {
+  ComponentFixture,
+  TestBed,
+  ComponentFixtureAutoDetect,
+} from '@angular/core/testing';
 
 import { TooltipComponent } from './tooltip.component';
 import { TooltipDirective } from './tooltip.directive';

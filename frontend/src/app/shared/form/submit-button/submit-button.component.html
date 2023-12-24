@@ -1,8 +1,8 @@
-<lib-button
+<app-button
   [id]="id"
   type="submit"
   (clickEvent)="handleClick()"
-  [libTooltip]="error ? tooltip : null"
+  [appTooltip]="error ? tooltip : null"
 >
   <ng-container *ngIf="!loading; else loader">
     <ng-container>
@@ -12,7 +12,7 @@
   <ng-template #loader>
     <app-loader [size]="24"></app-loader>
   </ng-template>
-</lib-button>
+</app-button>
 
 <ng-template #tooltip>
   {{ error }}

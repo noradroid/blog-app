@@ -1,7 +1,7 @@
-import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { TooltipModule } from 'tooltip';
+import { TooltipModule } from 'shared/tooltip/tooltip.module';
 import { REQUIRED_MSG } from '../generic-required-validation';
 import { ValidationMsg } from '../validation-msg.type';
 import { ValidationMsgPipe } from './validation-msg.pipe';

@@ -8,7 +8,7 @@ describe('TooltipComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TooltipComponent],
+      imports: [TooltipComponent]
     });
     fixture = TestBed.createComponent(TooltipComponent);
     component = fixture.componentInstance;

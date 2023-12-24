@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import {
   Observable,
@@ -11,15 +11,15 @@ import {
   timer,
 } from 'rxjs';
 
-import { ButtonModule } from 'button';
-import { TooltipModule } from 'tooltip';
+import { ButtonComponent } from 'shared/button/button.component';
+import { TooltipModule } from 'shared/tooltip/tooltip.module';
 import { DELAY } from 'src/app/app.constants';
 import { LoaderComponent } from '../../loader/loader.component';
 
 @Component({
   selector: 'app-submit-button',
   standalone: true,
-  imports: [CommonModule, ButtonModule, LoaderComponent, TooltipModule],
+  imports: [CommonModule, ButtonComponent, LoaderComponent, TooltipModule],
   templateUrl: './submit-button.component.html',
   styleUrls: ['./submit-button.component.scss'],
 })

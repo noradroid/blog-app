@@ -3,8 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { ButtonModule } from 'button';
-
+import { ButtonComponent } from 'shared/button/button.component';
 import { PostHttpService } from 'src/app/data/post/post.http.service';
 import { User } from 'src/app/data/user/user.model';
 import { EditorModule } from 'src/app/shared/editor/editor.module';
@@ -17,7 +16,7 @@ import { CreateForm } from '../shared/model/create-form.model';
   imports: [
     CommonModule,
     EditorModule,
-    ButtonModule,
+    ButtonComponent,
     FormsModule,
     InputComponent,
   ],

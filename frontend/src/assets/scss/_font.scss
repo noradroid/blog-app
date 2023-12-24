@@ -8,6 +8,12 @@ $font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-.fs-7 {
-  font-size: 12px;
+@layer base {
+  h1 {
+    @apply text-3xl font-bold;
+  }
+
+  h2 {
+    @apply text-xl font-semibold;
+  }
 }

@@ -6,5 +6,5 @@
     <a [routerLink]="['/u', post.user.username]">{{ post.user.username }}</a>
   </div>
   <img class="d-block" src="https://picsum.photos/300/200" />
-  <div [innerHtml]="post.content"></div>
+  <div [innerHtml]="post.content | html"></div>
 </div>

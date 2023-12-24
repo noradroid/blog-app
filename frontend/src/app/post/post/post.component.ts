@@ -1,13 +1,15 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Observable, map } from 'rxjs';
-import { Post } from 'src/app/data/post/post.model';
+import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Observable, map } from 'rxjs';
+
+import { Post } from 'src/app/data/post/post.model';
+import { HtmlPipe } from 'src/app/shared/html/html.pipe';
 
 @Component({
   selector: 'app-post',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, HtmlPipe],
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss'],
 })

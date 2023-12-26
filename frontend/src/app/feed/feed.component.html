@@ -4,7 +4,7 @@
       <div>
         <h2 class="mb-2" [routerLink]="['/post', post.id]">{{ post.title }}</h2>
         <div [innerHtml]="post.content | html"></div>
-        <div class="mt-1 text-sm">
+        <div class="mt-1 text-sm text-gray-400">
           Last updated: {{ post.lastModifiedDate | date: 'medium' }}
         </div>
       </div>

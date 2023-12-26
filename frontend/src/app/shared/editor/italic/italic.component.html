@@ -1,7 +1,8 @@
 <button
-  [ngClass]="active ? 'bg-dark-subtle' : ''"
+  class="p-0.5"
+  [ngClass]="active ? 'bg-gray-300' : ''"
   (click)="toggle()"
   (mousedown)="$event.preventDefault()"
 >
-  <span class="material-symbols-outlined"> format_italic </span>
+  <ng-icon name="radixFontItalic"></ng-icon>
 </button>

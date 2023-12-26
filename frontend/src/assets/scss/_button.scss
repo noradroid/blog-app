@@ -1,4 +1,5 @@
-/* Css reset */
-button {
-  outline: none;
+@layer base {
+  button {
+    @apply flex items-center outline-none;
+  }
 }

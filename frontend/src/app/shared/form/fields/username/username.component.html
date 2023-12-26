@@ -1,4 +1,4 @@
-<label for="username" class="mb-1"><strong>Username</strong></label>
+<label for="username" class="mb-1 block"><strong>Username</strong></label>
 <div class="flex items-center justify-start">
   <input
     type="text"
@@ -7,7 +7,7 @@
     [(ngModel)]="value"
     #input="ngModel"
     autocomplete="off"
-    class="border border-black py-1 px-2"
+    class="rounded border border-black px-3 py-1.5"
     placeholder="Enter username"
     [required]="true"
     [appUsernameValidation]="validate"

@@ -1,5 +1,5 @@
 <div class="flex flex-col">
-  <label [for]="id" class="mb-1" *ngIf="label">
+  <label [for]="id" class="mb-1 block" *ngIf="label">
     <strong>{{ label }}</strong>
   </label>
   <input
@@ -9,7 +9,7 @@
     [(ngModel)]="value"
     #input="ngModel"
     autocomplete="off"
-    class="border border-black py-1 px-2"
+    class="rounded border border-black px-3 py-1.5"
     placeholder="{{ placeholder }}"
     [required]="true"
   />

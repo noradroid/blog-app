@@ -8,7 +8,7 @@ describe('PublicTopbarComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [PublicTopbarComponent]
+      imports: [PublicTopbarComponent],
     });
     fixture = TestBed.createComponent(PublicTopbarComponent);
     component = fixture.componentInstance;

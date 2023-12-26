@@ -8,7 +8,7 @@ describe('PostPageComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [PostPageComponent]
+      imports: [PostPageComponent],
     });
     fixture = TestBed.createComponent(PostPageComponent);
     component = fixture.componentInstance;

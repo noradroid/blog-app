@@ -17,7 +17,10 @@ import { UserTopbarComponent } from '../user-topbar/user-topbar.component';
 })
 export class TopbarComponent {
   user$: Observable<User | null> = this.authService.user$;
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   gotoProfile(): void {
     this.user$.subscribe((user) => {

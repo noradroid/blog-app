@@ -8,8 +8,8 @@
       onlyRequired && ctrl.errors && ctrl.errors['required']
         ? requiredMsg.msg
         : onlyFirst
-        ? (ctrl.errors | validationMsg : errorMsgs)
-        : template
+          ? (ctrl.errors | validationMsg: errorMsgs)
+          : template
     "
     *ngIf="(ctrl.touched || ctrl.dirty) && ctrl.errors"
     >error</span
@@ -24,7 +24,7 @@
 <ng-template #template>
   <div class="flex flex-col items-start gap-1">
     <ng-container *ngFor="let msgs of errorMsgs">
-      <div class="flex justify-start items-center gap-1">
+      <div class="flex items-center justify-start gap-1">
         <div class="flex items-center justify-center">
           <span
             class="material-symbols-outlined text-danger fs-6"

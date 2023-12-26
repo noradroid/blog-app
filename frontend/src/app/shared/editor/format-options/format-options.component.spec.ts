@@ -8,7 +8,7 @@ describe('FormatOptionsComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [FormatOptionsComponent]
+      imports: [FormatOptionsComponent],
     });
     fixture = TestBed.createComponent(FormatOptionsComponent);
     component = fixture.componentInstance;

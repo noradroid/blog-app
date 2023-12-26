@@ -8,7 +8,7 @@ describe('PostComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [PostComponent]
+      imports: [PostComponent],
     });
     fixture = TestBed.createComponent(PostComponent);
     component = fixture.componentInstance;

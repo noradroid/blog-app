@@ -8,7 +8,7 @@ describe('NumberedListComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NumberedListComponent]
+      imports: [NumberedListComponent],
     });
     fixture = TestBed.createComponent(NumberedListComponent);
     component = fixture.componentInstance;

@@ -8,7 +8,7 @@ describe('BaseTopbarComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [BaseTopbarComponent]
+      imports: [BaseTopbarComponent],
     });
     fixture = TestBed.createComponent(BaseTopbarComponent);
     component = fixture.componentInstance;

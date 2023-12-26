@@ -8,7 +8,7 @@ describe('BulletListComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [BulletListComponent]
+      imports: [BulletListComponent],
     });
     fixture = TestBed.createComponent(BulletListComponent);
     component = fixture.componentInstance;

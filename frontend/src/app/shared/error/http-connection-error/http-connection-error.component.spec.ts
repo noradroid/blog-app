@@ -8,7 +8,7 @@ describe('HttpConnectionErrorComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpConnectionErrorComponent]
+      imports: [HttpConnectionErrorComponent],
     });
     fixture = TestBed.createComponent(HttpConnectionErrorComponent);
     component = fixture.componentInstance;

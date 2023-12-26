@@ -8,7 +8,7 @@ describe('FormLayoutComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [FormLayoutComponent]
+      imports: [FormLayoutComponent],
     });
     fixture = TestBed.createComponent(FormLayoutComponent);
     component = fixture.componentInstance;

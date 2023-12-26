@@ -6,8 +6,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './bullet-list.component.html',
-  styleUrls: ['./bullet-list.component.scss']
+  styleUrls: ['./bullet-list.component.scss'],
 })
-export class BulletListComponent {
-
-}
+export class BulletListComponent {}

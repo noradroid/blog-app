@@ -8,7 +8,7 @@ describe('ValidationIconComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ValidationIconComponent]
+      imports: [ValidationIconComponent],
     });
     fixture = TestBed.createComponent(ValidationIconComponent);
     component = fixture.componentInstance;

@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const colors = require('tailwindcss/colors');
+
 module.exports = {
   mode: 'jit',
   content: ['./src/**/*.{html,ts}'],
@@ -6,6 +8,9 @@ module.exports = {
     extend: {},
     fontFamily: {
       sans: ['Lato'],
+    },
+    colors: {
+      gray: colors.zinc,
     },
   },
   plugins: [],

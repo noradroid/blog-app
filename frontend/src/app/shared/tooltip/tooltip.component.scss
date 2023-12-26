@@ -1,17 +1,6 @@
 .tooltip {
-  all: unset;
-  font-size: 12px;
-  position: fixed;
-  z-index: 2;
-  background-color: black;
-  color: white;
-  transform: translateX(-50%);
-  /* transition: opacity 400ms;  */
-
   opacity: 0;
   &.show {
     opacity: 1;
-    /* placed here because unable to prevent contents from disappearing before tooltip itself */
-    transition: opacity 400ms;
   }
 }

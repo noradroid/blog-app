@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { FooterComponent } from './layout/footer/footer.component';
 import { TopbarComponent } from './layout/topbar/topbar/topbar.component';
+import { provideNgIconsConfig } from '@ng-icons/core';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,7 +17,11 @@ import { TopbarComponent } from './layout/topbar/topbar/topbar.component';
     FooterComponent,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    provideNgIconsConfig({
+      size: '1.25rem',
+    }),
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

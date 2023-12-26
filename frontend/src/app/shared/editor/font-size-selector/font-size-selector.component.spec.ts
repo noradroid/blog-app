@@ -8,7 +8,7 @@ describe('FontSizeSelectorComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [FontSizeSelectorComponent]
+      imports: [FontSizeSelectorComponent],
     });
     fixture = TestBed.createComponent(FontSizeSelectorComponent);
     component = fixture.componentInstance;

@@ -1,4 +1,5 @@
-.tooltip {
-  all: unset;
-  font-size: 12px;
+@layer components {
+  .tooltip {
+    @apply text-xs;
+  }
 }

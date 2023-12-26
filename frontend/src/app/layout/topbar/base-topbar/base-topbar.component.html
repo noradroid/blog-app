@@ -1,10 +1,6 @@
-<div
-  class="container d-flex align-items-center justify-content-between p-3 border-bottom border-black bg-white"
->
-  <div class="d-flex align-items-center gap-4">
-    <ng-content select="[left]"></ng-content>
-  </div>
-  <div class="d-flex align-items-center gap-4">
-    <ng-content select="[right]"></ng-content>
+<div class="flex items-center justify-start bg-white py-4">
+  <app-logo></app-logo>
+  <div class="flex w-full items-center justify-end gap-4">
+    <ng-content></ng-content>
   </div>
 </div>

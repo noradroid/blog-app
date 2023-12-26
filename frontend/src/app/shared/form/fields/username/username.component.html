@@ -1,5 +1,5 @@
-<label for="username" class="mb-1"><strong>Username</strong></label>
-<div class="d-flex align-items-center justify-content-start">
+<label for="username" class="mb-1 block"><strong>Username</strong></label>
+<div class="flex items-center justify-start">
   <input
     type="text"
     id="username"
@@ -7,7 +7,7 @@
     [(ngModel)]="value"
     #input="ngModel"
     autocomplete="off"
-    class="border border-black py-1 px-2"
+    class="input"
     placeholder="Enter username"
     [required]="true"
     [appUsernameValidation]="validate"

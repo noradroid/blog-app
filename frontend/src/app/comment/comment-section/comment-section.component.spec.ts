@@ -8,7 +8,7 @@ describe('CommentSectionComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [CommentSectionComponent]
+      imports: [CommentSectionComponent],
     });
     fixture = TestBed.createComponent(CommentSectionComponent);
     component = fixture.componentInstance;

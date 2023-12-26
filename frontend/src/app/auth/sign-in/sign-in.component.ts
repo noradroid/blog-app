@@ -34,7 +34,10 @@ export class SignInComponent {
     password: '',
   };
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   submitFn: (form: FormGroup) => Observable<User> = (
     form: FormGroup

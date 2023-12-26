@@ -8,7 +8,7 @@ describe('UnderlineComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [UnderlineComponent]
+      imports: [UnderlineComponent],
     });
     fixture = TestBed.createComponent(UnderlineComponent);
     component = fixture.componentInstance;

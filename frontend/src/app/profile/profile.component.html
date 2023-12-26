@@ -1,7 +1,19 @@
-<div class="w-100 d-flex flex-column">
+<div class="w-100 flex flex-col">
   <h1 class="mb-4">My Profile</h1>
 
   <ng-container *ngIf="user$ | async as user">
-    {{ user.username }} {{ user.id }}
+    <div class="flex w-full">
+      <div class="w-1/2">
+        <h2>{{ user.username }}</h2>
+        <p>User Id: {{ user.id }}</p>
+      </div>
+      <div class="w-1/2">
+        <img
+          class="block"
+          src="https://picsum.photos/200/200"
+          class="aspect-square h-52 w-52"
+        />
+      </div>
+    </div>
   </ng-container>
 </div>

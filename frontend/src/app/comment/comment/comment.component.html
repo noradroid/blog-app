@@ -1,13 +1,14 @@
-<div class="d-flex">
-  <img
-    src="https://picsum.photos/40/40"
-    height="40px"
-    width="40px"
-    style="margin-right: 10px"
-  />
-  <div>
-    <div class="fs-6"><strong>Name</strong></div>
-    <div class="fs-7"><strong>Date</strong></div>
-    <div class="fs-6">Comment</div>
+<div class="flex w-full flex-col gap-1">
+  <div class="flex w-full flex-row items-center justify-between">
+    <div class="flex flex-row items-center gap-2">
+      <img
+        src="https://picsum.photos/40/40"
+        class="aspect-square rounded-full"
+        style="height: 40px"
+      />
+      <div clas="text-sm text-gray-700"><strong>Name</strong></div>
+    </div>
+    <div class="text-sm text-gray-400">Date</div>
   </div>
+  <div>Comment</div>
 </div>

@@ -1,8 +1,14 @@
-@import "font";
-@import "color";
-@import "button";
-@import "input";
-@import "tooltip";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'font';
+@import 'color';
+@import 'gray';
+@import 'border';
+@import 'button';
+@import 'input';
+@import 'tooltip';
 
 html,
 body {

@@ -39,7 +39,10 @@ export class TooltipDirective implements AfterViewInit, OnDestroy {
 
   hovered: boolean = false;
 
-  constructor(private elementRef: ElementRef, private _vcr: ViewContainerRef) {}
+  constructor(
+    private elementRef: ElementRef,
+    private _vcr: ViewContainerRef
+  ) {}
 
   ngAfterViewInit(): void {
     this.tooltipRef = this._vcr.createComponent(TooltipComponent);

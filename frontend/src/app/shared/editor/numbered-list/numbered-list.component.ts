@@ -6,8 +6,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './numbered-list.component.html',
-  styleUrls: ['./numbered-list.component.scss']
+  styleUrls: ['./numbered-list.component.scss'],
 })
-export class NumberedListComponent {
-
-}
+export class NumberedListComponent {}

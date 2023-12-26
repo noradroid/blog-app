@@ -1,8 +1,8 @@
-<form #form="ngForm" class="d-flex align-items-center gap-3 mb-3">
+<form #form="ngForm" class="mb-3 flex items-center gap-3">
   <app-input
     id="comment"
-    placeholder="Join the discussion"
-    class="w-100"
+    placeholder="Enter comment"
+    class="w-full"
   ></app-input>
   <app-button (clickEvent)="submit()">Comment</app-button>
 </form>

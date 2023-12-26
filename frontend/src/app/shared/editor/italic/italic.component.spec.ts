@@ -8,7 +8,7 @@ describe('ItalicComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ItalicComponent]
+      imports: [ItalicComponent],
     });
     fixture = TestBed.createComponent(ItalicComponent);
     component = fixture.componentInstance;

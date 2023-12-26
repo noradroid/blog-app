@@ -6,8 +6,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './font-size-selector.component.html',
-  styleUrls: ['./font-size-selector.component.scss']
+  styleUrls: ['./font-size-selector.component.scss'],
 })
-export class FontSizeSelectorComponent {
-
-}
+export class FontSizeSelectorComponent {}

@@ -27,15 +27,13 @@
       <strong>Content</strong>
     </label>
     <div
-      class="flex h-full min-h-80 w-full flex-col rounded border border-black"
+      class="input flex h-full min-h-80 w-full flex-col p-0 focus-within:border-gray-700"
     >
-      <app-format-options
-        class="w-full border-b border-black"
-      ></app-format-options>
+      <app-format-options class="w-full"></app-format-options>
       <app-textarea
         id="content"
         name="content"
-        class="flex-fill flex w-full"
+        class="flex h-full w-full grow"
         [(ngModel)]="model.content"
       ></app-textarea>
     </div>

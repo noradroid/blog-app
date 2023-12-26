@@ -10,3 +10,11 @@ input {
 *[contenteditable='true'] {
   outline: none;
 }
+
+@layer components {
+  .input {
+    @apply gray-border rounded px-3 py-1.5
+      transition-shadow duration-300 
+      hover:shadow focus:shadow;
+  }
+}

@@ -10,6 +10,7 @@ module.exports = {
       sans: ['Lato'],
     },
     colors: {
+      ...colors,
       gray: colors.zinc,
     },
   },

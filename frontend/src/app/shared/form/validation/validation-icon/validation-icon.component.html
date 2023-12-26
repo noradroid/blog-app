@@ -2,8 +2,9 @@
   class="flex items-center justify-center p-2"
   style="width: 40px; aspect-ratio: 1/1"
 >
-  <span
-    class="material-symbols-outlined text-danger"
+  <ng-icon
+    name="radixCrossCircled"
+    class="text-red-600"
     [appTooltip]="
       onlyRequired && ctrl.errors && ctrl.errors['required']
         ? requiredMsg.msg
@@ -12,13 +13,12 @@
           : template
     "
     *ngIf="(ctrl.touched || ctrl.dirty) && ctrl.errors"
-    >error</span
-  >
-  <span
-    class="material-symbols-outlined text-success"
+  ></ng-icon>
+  <ng-icon
+    name="radixCheckCircled"
+    class="text-green-600"
     *ngIf="ctrl.value && ctrl.valid"
-    >check_circle</span
-  >
+  ></ng-icon>
 </div>
 
 <ng-template #template>
@@ -26,16 +26,16 @@
     <ng-container *ngFor="let msgs of errorMsgs">
       <div class="flex items-center justify-start gap-1">
         <div class="flex items-center justify-center">
-          <span
-            class="material-symbols-outlined text-danger fs-6"
+          <ng-icon
+            name="radixCrossCircled"
+            class="text-red-600"
             *ngIf="ctrl.errors && ctrl.errors[msgs.name]"
-            >error</span
-          >
-          <span
-            class="material-symbols-outlined text-success fs-6"
+          ></ng-icon>
+          <ng-icon
+            name="radixCheckCircled"
+            class="text-green-600"
             *ngIf="!ctrl.errors || !ctrl.errors[msgs.name]"
-            >check_circle</span
-          >
+          ></ng-icon>
         </div>
         <div class="flex items-center justify-center">
           <span>{{ msgs.msg }}</span>

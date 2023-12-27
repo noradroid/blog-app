@@ -29,6 +29,6 @@ export class FormatOptionComponent implements OnInit {
 
   toggle(): void {
     this.active = !this.active;
-    this.service.setBold(this.active);
+    this.service.set(this.name!, this.active);
   }
 }

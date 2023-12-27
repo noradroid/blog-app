@@ -5,6 +5,7 @@ import { BulletListComponent } from '../bullet-list/bullet-list.component';
 import { FontSizeSelectorComponent } from '../font-size-selector/font-size-selector.component';
 import { ItalicComponent } from '../italic/italic.component';
 import { UnderlineComponent } from '../underline/underline.component';
+import { StrikethroughComponent } from '../strikethrough/strikethrough.component';
 
 @Component({
   selector: 'app-format-options',
@@ -16,6 +17,7 @@ import { UnderlineComponent } from '../underline/underline.component';
     UnderlineComponent,
     BulletListComponent,
     FontSizeSelectorComponent,
+    StrikethroughComponent,
   ],
   templateUrl: './format-options.component.html',
   styleUrls: ['./format-options.component.scss'],

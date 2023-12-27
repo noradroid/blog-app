@@ -42,6 +42,27 @@ export class TextareaComponent implements ControlValueAccessor {
         document.execCommand('underline', false);
       }
     });
+    this.service.get$('strikethrough').subscribe((strikethrough) => {
+      if (strikethrough) {
+        document.execCommand('strikethrough', false);
+      } else {
+        document.execCommand('strikethrough', false);
+      }
+    });
+    this.service.get$('bulletList').subscribe((bulletList) => {
+      if (bulletList) {
+        document.execCommand('insertUnorderedList', true);
+      } else {
+        document.execCommand('insertUnorderedList', false);
+      }
+    });
+    this.service.get$('code').subscribe((code) => {
+      if (code) {
+        document.execCommand('fontName', false, 'Consolas');
+      } else {
+        document.execCommand('fontName', false, 'Lato');
+      }
+    });
   }
 
   writeValue(value: string): void {

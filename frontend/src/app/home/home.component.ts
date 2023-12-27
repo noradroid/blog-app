@@ -4,7 +4,11 @@ import { RouterModule } from '@angular/router';
 
 import { FeedComponent } from '../feed/feed.component';
 import { radixPlus } from '@ng-icons/radix-icons';
-import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import {
+  NgIconComponent,
+  provideIcons,
+  provideNgIconsConfig,
+} from '@ng-icons/core';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +16,11 @@ import { NgIconComponent, provideIcons } from '@ng-icons/core';
   imports: [CommonModule, RouterModule, FeedComponent, NgIconComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  viewProviders: [provideIcons({ radixPlus })],
+  viewProviders: [
+    provideIcons({ radixPlus }),
+    provideNgIconsConfig({
+      size: '1.5rem',
+    }),
+  ],
 })
 export class HomeComponent {}

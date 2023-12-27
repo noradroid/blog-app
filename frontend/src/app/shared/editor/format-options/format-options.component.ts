@@ -6,6 +6,7 @@ import { FontSizeSelectorComponent } from '../font-size-selector/font-size-selec
 import { ItalicComponent } from '../italic/italic.component';
 import { UnderlineComponent } from '../underline/underline.component';
 import { StrikethroughComponent } from '../strikethrough/strikethrough.component';
+import { CodeComponent } from '../code/code.component';
 
 @Component({
   selector: 'app-format-options',
@@ -18,6 +19,7 @@ import { StrikethroughComponent } from '../strikethrough/strikethrough.component
     BulletListComponent,
     FontSizeSelectorComponent,
     StrikethroughComponent,
+    CodeComponent,
   ],
   templateUrl: './format-options.component.html',
   styleUrls: ['./format-options.component.scss'],

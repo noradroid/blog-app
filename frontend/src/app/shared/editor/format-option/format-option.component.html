@@ -1,0 +1,9 @@
+<button
+  class="p-0.5"
+  [ngClass]="active ? 'bg-gray-300' : ''"
+  (click)="toggle()"
+  (mousedown)="$event.preventDefault()"
+  *ngIf="name"
+>
+  <ng-content></ng-content>
+</button>

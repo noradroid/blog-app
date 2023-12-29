@@ -52,7 +52,8 @@ public class MinioAdapter {
         log.info("Uploading file to MinIO");
         try {
             minioClient.putObject(
-                PutObjectArgs.builder().bucket(bucketName).object(fileName).stream().build());
+                PutObjectArgs.builder().bucket(bucketName).object(fileName)
+                    .stream(inputStream, -1, 10485760).build());
         } catch (ErrorResponseException | InsufficientDataException | InternalException |
                  InvalidKeyException
                  | InvalidResponseException | IOException | NoSuchAlgorithmException |

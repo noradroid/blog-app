@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/posts")
@@ -66,5 +67,10 @@ public class PostResource {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePost(@PathVariable("id") Long id) {
         postService.deletePost(id);
+    }
+
+    @PostMapping("/image")
+    public void uploadImage(@RequestParam("file") MultipartFile file) {
+        postService.uploadFile(file);
     }
 }

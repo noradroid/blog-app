@@ -6,18 +6,25 @@ import com.example.blog.domain.User;
 import com.example.blog.exception.EntityDeletedException;
 import com.example.blog.exception.ResponseCodeException;
 import com.example.blog.repository.PostRepository;
+import com.example.blog.service.adapter.MinioAdapter;
 import com.example.blog.service.dto.post.CreatePostRequestDto;
 import com.example.blog.service.dto.post.PostDto;
 import com.example.blog.service.dto.post.UpdatePostRequestDto;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+@Slf4j
 @Service
 public class PostService {
 
@@ -26,6 +33,9 @@ public class PostService {
 
     @Autowired
     PostRepository postRepository;
+
+    @Autowired
+    MinioAdapter minioAdapter;
 
     /**
      * Used for feed, get only active posts.
@@ -123,5 +133,16 @@ public class PostService {
     @Transactional(readOnly = true)
     public boolean isTitleTaken(String title, User user) {
         return postRepository.existsByTitleIgnoreCaseAndUserAndActiveTrue(title, user);
+    }
+
+    public void uploadFile(MultipartFile file) {
+        try {
+            InputStream inputStream = new BufferedInputStream(file.getInputStream());
+            minioAdapter.uploadFile("photos", file.getOriginalFilename(), inputStream);
+        } catch (IOException e) {
+            log.error(e.getMessage());
+            throw new RuntimeException(e);
+        }
+
     }
 }

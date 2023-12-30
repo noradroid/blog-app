@@ -1,6 +1,7 @@
 package com.example.blog.service.adapter;
 
 import io.minio.BucketExistsArgs;
+import io.minio.GetObjectArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import io.minio.PutObjectArgs;
@@ -54,6 +55,26 @@ public class MinioAdapter {
             minioClient.putObject(
                 PutObjectArgs.builder().bucket(bucketName).object(fileName)
                     .stream(inputStream, -1, 10485760).build());
+        } catch (ErrorResponseException | InsufficientDataException | InternalException |
+                 InvalidKeyException
+                 | InvalidResponseException | IOException | NoSuchAlgorithmException |
+                 ServerException
+                 | XmlParserException e) {
+            log.error(e.getMessage());
+            throw new RuntimeException(e);
+        }
+    }
+
+    public byte[] downloadFile(String bucketName, String path) {
+        if (!bucketExists(bucketName)) {
+            throw new RuntimeException();
+        }
+        log.info("Downloading file from MinIO");
+        try (
+            InputStream inputStream = minioClient.getObject(
+                GetObjectArgs.builder().bucket(bucketName).object(path).build())
+        ) {
+            return inputStream.readAllBytes();
         } catch (ErrorResponseException | InsufficientDataException | InternalException |
                  InvalidKeyException
                  | InvalidResponseException | IOException | NoSuchAlgorithmException |

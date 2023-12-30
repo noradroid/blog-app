@@ -19,6 +19,8 @@ import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -135,14 +137,18 @@ public class PostService {
         return postRepository.existsByTitleIgnoreCaseAndUserAndActiveTrue(title, user);
     }
 
-    public void uploadFile(MultipartFile file) {
-        try {
-            InputStream inputStream = new BufferedInputStream(file.getInputStream());
+    public void uploadImage(MultipartFile file) {
+        try (InputStream inputStream = new BufferedInputStream(file.getInputStream())) {
             minioAdapter.uploadFile("photos", file.getOriginalFilename(), inputStream);
         } catch (IOException e) {
             log.error(e.getMessage());
             throw new RuntimeException(e);
         }
 
+    }
+
+    public Resource downloadImage() {
+        byte[] file = minioAdapter.downloadFile("photos", "photos/20201020_085720.jpg");
+        return new ByteArrayResource(file);
     }
 }

@@ -37,7 +37,7 @@ public class PostService {
     PostRepository postRepository;
 
     @Autowired
-    MinioAdapter minioAdapter;
+    ImageService imageService;
 
     /**
      * Used for feed, get only active posts.
@@ -138,17 +138,10 @@ public class PostService {
     }
 
     public void uploadImage(MultipartFile file) {
-        try (InputStream inputStream = new BufferedInputStream(file.getInputStream())) {
-            minioAdapter.uploadFile("photos", file.getOriginalFilename(), inputStream);
-        } catch (IOException e) {
-            log.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
-
+        imageService.uploadImage(file);
     }
 
-    public Resource downloadImage() {
-        byte[] file = minioAdapter.downloadFile("photos", "photos/20201020_085720.jpg");
-        return new ByteArrayResource(file);
+    public Resource downloadImage(String name) {
+        return imageService.downloadImage(name);
     }
 }

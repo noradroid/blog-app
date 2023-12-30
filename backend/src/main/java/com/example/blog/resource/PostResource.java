@@ -77,7 +77,7 @@ public class PostResource {
     }
 
     @GetMapping(value = "/image", produces = MediaType.IMAGE_JPEG_VALUE)
-    public Resource getImage() {
-        return postService.downloadImage();
+    public Resource getImage(@RequestParam("name") String name) {
+        return postService.downloadImage(name);
     }
 }

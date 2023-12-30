@@ -32,4 +32,16 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
         problemDetail.setTitle(ex.getMessage());
         return problemDetail;
     }
+
+    @ExceptionHandler(NotFoundException.class)
+    protected ProblemDetail handleNotFoundException(
+        NotFoundException ex
+    ) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+            HttpStatus.NOT_FOUND,
+            ex.getMessage()
+        );
+        problemDetail.setTitle(ex.getMessage());
+        return problemDetail;
+    }
 }

@@ -1,5 +1,7 @@
 package com.example.blog.service.adapter;
 
+import com.example.blog.exception.FileNotFoundException;
+import com.example.blog.exception.NotFoundException;
 import io.minio.BucketExistsArgs;
 import io.minio.GetObjectArgs;
 import io.minio.MakeBucketArgs;
@@ -55,6 +57,7 @@ public class MinioAdapter {
             minioClient.putObject(
                 PutObjectArgs.builder().bucket(bucketName).object(fileName)
                     .stream(inputStream, -1, 10485760).build());
+            log.info("Successfully uploaded file to MinIO");
         } catch (ErrorResponseException | InsufficientDataException | InternalException |
                  InvalidKeyException
                  | InvalidResponseException | IOException | NoSuchAlgorithmException |
@@ -65,23 +68,31 @@ public class MinioAdapter {
         }
     }
 
-    public byte[] downloadFile(String bucketName, String path) {
+    public byte[] downloadFile(String bucketName, String path) throws FileNotFoundException {
         if (!bucketExists(bucketName)) {
-            throw new RuntimeException();
+            log.error("Bucket ".concat(bucketName).concat(" does not exist"));
+            throw new NotFoundException("Bucket ".concat(bucketName).concat(" does not exist"));
         }
         log.info("Downloading file from MinIO");
         try (
             InputStream inputStream = minioClient.getObject(
                 GetObjectArgs.builder().bucket(bucketName).object(path).build())
         ) {
+            log.info("Successfully downloaded file from MinIO");
             return inputStream.readAllBytes();
         } catch (ErrorResponseException | InsufficientDataException | InternalException |
                  InvalidKeyException
                  | InvalidResponseException | IOException | NoSuchAlgorithmException |
                  ServerException
                  | XmlParserException e) {
-            log.error(e.getMessage());
-            throw new RuntimeException(e);
+            if (e instanceof ErrorResponseException
+                && ((ErrorResponseException) e).errorResponse().code().equals("NoSuchKey")) {
+                log.error("File ".concat(path).concat(" does not exist"));
+                throw new FileNotFoundException();
+            } else {
+                log.error(e.getMessage());
+                throw new RuntimeException(e);
+            }
         }
     }
 

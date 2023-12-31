@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ButtonComponent } from 'shared/button/button.component';
+import { ImageHttpService } from 'src/app/data/image/image.http.service';
 import { PostHttpService } from 'src/app/data/post/post.http.service';
 import { User } from 'src/app/data/user/user.model';
 import { EditorModule } from 'src/app/shared/editor/editor.module';
@@ -30,23 +31,32 @@ export class CreateComponent {
     description: '',
     content: '',
   };
+  checked = false;
+  img: File | null = null;
 
   constructor(
     private service: PostHttpService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public imageService: ImageHttpService
   ) {
     this.route.data.subscribe((data) => (this.user = data['user']));
+    this.imageService.get().subscribe((res) => {
+      const contentTypeHeader = res.headers.get('Content-Type');
+      const extension = contentTypeHeader!.replace('image/', '');
+      this.img = new File([res.body!], `blob.${extension}`);
+    });
   }
 
   submit(): void {
-    this.service
-      .create({
-        ...this.model,
-        userId: this.user.id,
-      })
-      .subscribe((post) => {
-        this.router.navigate(['/post', post.id]);
-      });
+    this.imageService.post(this.img!).subscribe();
+    // this.service
+    //   .create({
+    //     ...this.model,
+    //     userId: this.user.id,
+    //   })
+    //   .subscribe((post) => {
+    //     this.router.navigate(['/post', post.id]);
+    //   });
   }
 }

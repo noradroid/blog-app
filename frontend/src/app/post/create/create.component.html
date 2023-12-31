@@ -38,4 +38,23 @@
       ></app-textarea>
     </div>
   </div>
+
+  <div class="flex h-full w-full flex-col">
+    <div class="mb-1 flex gap-3">
+      <label for="image">
+        <strong>Image</strong>
+      </label>
+      <input
+        type="checkbox"
+        (change)="checked = $any($event.target).checked"
+        [checked]="checked"
+      />
+    </div>
+
+    <img
+      src="https://picsum.photos/300/200"
+      *ngIf="checked"
+      style="width: 300px; height: 200px"
+    />
+  </div>
 </form>

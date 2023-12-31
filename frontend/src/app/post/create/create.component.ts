@@ -33,6 +33,7 @@ export class CreateComponent {
   };
   checked = false;
   img: File | null = null;
+  imgUrl!: any;
 
   constructor(
     private service: PostHttpService,
@@ -45,6 +46,7 @@ export class CreateComponent {
       const contentTypeHeader = res.headers.get('Content-Type');
       const extension = contentTypeHeader!.replace('image/', '');
       this.img = new File([res.body!], `blob.${extension}`);
+      this.imgUrl = URL.createObjectURL(this.img!);
     });
   }
 

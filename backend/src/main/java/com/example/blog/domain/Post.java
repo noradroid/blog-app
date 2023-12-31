@@ -33,6 +33,10 @@ public class Post implements Serializable {
 
     @NotNull
     @Column
+    private String description;
+
+    @NotNull
+    @Column
     private String content;
 
     @CreatedDate

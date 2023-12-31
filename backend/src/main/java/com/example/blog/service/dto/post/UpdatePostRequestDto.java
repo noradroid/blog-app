@@ -9,5 +9,8 @@ public class UpdatePostRequestDto {
     String title;
 
     @JsonProperty(required = true)
+    String description;
+
+    @JsonProperty(required = true)
     String content;
 }

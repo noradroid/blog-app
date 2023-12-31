@@ -83,6 +83,7 @@ public class PostService {
         }
         Post post = new Post();
         post.setTitle(req.getTitle());
+        post.setDescription(req.getDescription());
         post.setContent(req.getContent());
         post.setUser(user);
         post.setActive(StatusConstants.ACTIVE);
@@ -109,6 +110,7 @@ public class PostService {
             );
         }
         post.setTitle(req.getTitle());
+        post.setDescription(req.getDescription());
         post.setContent(req.getContent());
         post.setLastModifiedDate(Instant.now());
         postRepository.save(post);

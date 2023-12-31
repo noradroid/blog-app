@@ -51,14 +51,14 @@ export class CreateComponent {
   }
 
   submit(): void {
-    this.imageService.post(this.img!).subscribe();
-    // this.service
-    //   .create({
-    //     ...this.model,
-    //     userId: this.user.id,
-    //   })
-    //   .subscribe((post) => {
-    //     this.router.navigate(['/post', post.id]);
-    //   });
+    // this.imageService.post(this.img!).subscribe();
+    this.service
+      .create({
+        ...this.model,
+        userId: this.user.id,
+      })
+      .subscribe((post) => {
+        this.router.navigate(['/post', post.id]);
+      });
   }
 }

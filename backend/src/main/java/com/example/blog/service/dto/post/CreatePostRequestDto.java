@@ -9,6 +9,9 @@ public class CreatePostRequestDto {
     @JsonProperty(value = "title")
     String title;
 
+    @JsonProperty(value = "description")
+    String description;
+
     @JsonProperty(value = "content")
     String content;
 

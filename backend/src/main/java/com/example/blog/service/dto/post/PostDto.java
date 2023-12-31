@@ -17,6 +17,9 @@ public class PostDto {
     String title;
 
     @JsonProperty
+    String description;
+
+    @JsonProperty
     String content;
 
     @JsonProperty
@@ -37,6 +40,7 @@ public class PostDto {
         this.active = post.getActive();
         // Don't share extra information if post is deleted
         if (active.equals(StatusConstants.ACTIVE)) {
+            this.description = post.getDescription();
             this.content = post.getContent();
             this.user = new UserDto(post.getUser());
             this.createdDate = post.getCreatedDate();

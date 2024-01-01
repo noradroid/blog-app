@@ -52,7 +52,8 @@ public class Image implements Serializable {
 //    private User user;
 //
 //    @NotNull
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "post_id", nullable = false)
-//    private Post post;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "post_id", nullable = true)
+    private Post post;
 }

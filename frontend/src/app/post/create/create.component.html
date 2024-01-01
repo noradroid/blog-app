@@ -51,6 +51,10 @@
       />
     </div>
 
-    <img [src]="imgUrl" *ngIf="checked" style="width: 300px; height: 200px" />
+    <img
+      [src]="imgUrl"
+      *ngIf="checked && imgUrl"
+      style="width: 300px; height: 200px"
+    />
   </div>
 </form>

@@ -4,6 +4,8 @@ import com.example.blog.service.PostService;
 import com.example.blog.service.dto.post.CreatePostRequestDto;
 import com.example.blog.service.dto.post.PostDto;
 import com.example.blog.service.dto.post.UpdatePostRequestDto;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -54,8 +56,20 @@ public class PostResource {
     }
 
     @PostMapping()
-    public ResponseEntity<PostDto> createPost(@RequestBody CreatePostRequestDto req) {
-        return new ResponseEntity<>(postService.createPost(req), HttpStatus.CREATED);
+    public ResponseEntity<PostDto> createPost(
+        @RequestParam(value = "image", required = true) MultipartFile image,
+        @RequestParam(value = "model", required = true) String model
+    ) {
+        try {
+            CreatePostRequestDto requestDto = (new ObjectMapper()).readValue(model,
+                CreatePostRequestDto.class
+            );
+            return new ResponseEntity<>(postService.createPost(requestDto, image),
+                HttpStatus.CREATED
+            );
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @PutMapping("/{id}")

@@ -33,7 +33,7 @@ export class CreateComponent {
   };
   checked = false;
   img: File | null = null;
-  imgUrl!: any;
+  imgUrl: string | null = null;
 
   constructor(
     private service: PostHttpService,
@@ -53,10 +53,13 @@ export class CreateComponent {
   submit(): void {
     // this.imageService.post(this.img!).subscribe();
     this.service
-      .create({
-        ...this.model,
-        userId: this.user.id,
-      })
+      .create(
+        {
+          ...this.model,
+          userId: this.user.id,
+        },
+        this.img ?? undefined
+      )
       .subscribe((post) => {
         this.router.navigate(['/post', post.id]);
       });

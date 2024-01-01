@@ -14,8 +14,13 @@ export class PostHttpService {
 
   constructor(private http: HttpClient) {}
 
-  create(model: PostRequestDto): Observable<Post> {
-    return this.http.post<Post>(this.ENDPOINT, model);
+  create(model: PostRequestDto, image?: File): Observable<Post> {
+    const formData = new FormData();
+    if (image) {
+      formData.append('image', image);
+    }
+    formData.append('model', JSON.stringify(model));
+    return this.http.post<Post>(this.ENDPOINT, formData);
   }
 
   update(id: number, model: PostRequestDto): Observable<Post> {

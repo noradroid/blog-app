@@ -1,6 +1,7 @@
 package com.example.blog.service;
 
 import com.example.blog.constants.StatusConstants;
+import com.example.blog.domain.Image;
 import com.example.blog.domain.Post;
 import com.example.blog.domain.User;
 import com.example.blog.exception.EntityDeletedException;
@@ -68,7 +69,7 @@ public class PostService {
     }
 
     @Transactional(readOnly = false)
-    public PostDto createPost(CreatePostRequestDto req) {
+    public PostDto createPost(CreatePostRequestDto req, MultipartFile image) {
         if (StringUtils.isEmpty(req.getTitle()) || StringUtils.isEmpty(req.getContent())
             || req.getUserId() == null) {
             throw new ResponseCodeException(HttpStatus.BAD_REQUEST,
@@ -81,6 +82,7 @@ public class PostService {
                 "Title is taken, please use another title"
             );
         }
+        Image uploadedImage = imageService.uploadImage(image);
         Post post = new Post();
         post.setTitle(req.getTitle());
         post.setDescription(req.getDescription());
@@ -88,6 +90,7 @@ public class PostService {
         post.setUser(user);
         post.setActive(StatusConstants.ACTIVE);
         postRepository.save(post);
+        imageService.addImageToPost(uploadedImage, post);
         return new PostDto(post);
     }
 
@@ -126,7 +129,6 @@ public class PostService {
             postRepository.save(post);
         } catch (Exception e) {
         }
-
     }
 
     @Transactional(readOnly = true)

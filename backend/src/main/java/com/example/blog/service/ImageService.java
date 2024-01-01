@@ -2,6 +2,7 @@ package com.example.blog.service;
 
 import com.example.blog.constants.StatusConstants;
 import com.example.blog.domain.Image;
+import com.example.blog.domain.Post;
 import com.example.blog.exception.FileNotFoundException;
 import com.example.blog.repository.ImageRepository;
 import com.example.blog.service.adapter.MinioAdapter;
@@ -42,6 +43,11 @@ public class ImageService {
             log.error(e.getMessage());
             throw new RuntimeException(e);
         }
+    }
+
+    public Image addImageToPost(Image image, Post post) {
+        image.setPost(post);
+        return imageRepository.save(image);
     }
 
     public Resource downloadImage(String name) {

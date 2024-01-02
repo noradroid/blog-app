@@ -88,9 +88,9 @@ public class PostService {
         post.setDescription(req.getDescription());
         post.setContent(req.getContent());
         post.setUser(user);
+        post.setImage(uploadedImage);
         post.setActive(StatusConstants.ACTIVE);
         postRepository.save(post);
-        imageService.addImageToPost(uploadedImage, post);
         return new PostDto(post);
     }
 

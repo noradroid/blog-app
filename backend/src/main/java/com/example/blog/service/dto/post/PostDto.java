@@ -26,6 +26,9 @@ public class PostDto {
     UserDto user;
 
     @JsonProperty
+    Long imageId;
+
+    @JsonProperty
     Instant createdDate;
 
     @JsonProperty
@@ -43,6 +46,7 @@ public class PostDto {
             this.description = post.getDescription();
             this.content = post.getContent();
             this.user = new UserDto(post.getUser());
+            this.imageId = post.getImage().getId();
             this.createdDate = post.getCreatedDate();
             this.lastModifiedDate = post.getLastModifiedDate();
         }

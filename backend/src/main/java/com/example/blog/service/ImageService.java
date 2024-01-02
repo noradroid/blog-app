@@ -2,14 +2,15 @@ package com.example.blog.service;
 
 import com.example.blog.constants.StatusConstants;
 import com.example.blog.domain.Image;
-import com.example.blog.domain.Post;
 import com.example.blog.exception.FileNotFoundException;
 import com.example.blog.repository.ImageRepository;
 import com.example.blog.service.adapter.MinioAdapter;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.compress.utils.FileNameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
@@ -33,7 +34,8 @@ public class ImageService {
     public Image uploadImage(MultipartFile file) {
         try (InputStream inputStream = new BufferedInputStream(file.getInputStream())) {
             String name = file.getOriginalFilename();
-            minioAdapter.uploadFile(bucketName, name, inputStream);
+            minioAdapter.uploadFile(bucketName, generateUniqueFileName(name), inputStream);
+            // TODO: Add field for saved file name in image object
             Image image = new Image();
             image.setName(name);
             image.setPath(name);
@@ -45,11 +47,6 @@ public class ImageService {
         }
     }
 
-    public Image addImageToPost(Image image, Post post) {
-        image.setPost(post);
-        return imageRepository.save(image);
-    }
-
     public Resource downloadImage(String name) {
         try {
             byte[] file = minioAdapter.downloadFile(bucketName, name);
@@ -57,7 +54,6 @@ public class ImageService {
         } catch (FileNotFoundException e) {
             throw new FileNotFoundException(name);
         }
-
     }
 
     public Resource downloadImage(Image image) {
@@ -67,5 +63,12 @@ public class ImageService {
         } catch (FileNotFoundException e) {
             throw new FileNotFoundException(image.getName());
         }
+    }
+
+    private String generateUniqueFileName(String fileName) {
+        String name = FileNameUtils.getBaseName(fileName);
+        String extension = FileNameUtils.getExtension(fileName);
+        return name.concat("_").concat(String.valueOf(UUID.randomUUID())).concat(".")
+            .concat(extension);
     }
 }

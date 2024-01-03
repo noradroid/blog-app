@@ -34,11 +34,11 @@ public class ImageService {
     public Image uploadImage(MultipartFile file) {
         try (InputStream inputStream = new BufferedInputStream(file.getInputStream())) {
             String name = file.getOriginalFilename();
-            minioAdapter.uploadFile(bucketName, generateUniqueFileName(name), inputStream);
-            // TODO: Add field for saved file name in image object
+            String uniqueFileName = generateUniqueFileName(name);
+            minioAdapter.uploadFile(bucketName, uniqueFileName, inputStream);
             Image image = new Image();
             image.setName(name);
-            image.setPath(name);
+            image.setPath(uniqueFileName);
             image.setActive(StatusConstants.ACTIVE);
             return imageRepository.save(image);
         } catch (IOException e) {
@@ -47,12 +47,12 @@ public class ImageService {
         }
     }
 
-    public Resource downloadImage(String name) {
+    public Resource downloadImage(String path) {
         try {
-            byte[] file = minioAdapter.downloadFile(bucketName, name);
+            byte[] file = minioAdapter.downloadFile(bucketName, path);
             return new ByteArrayResource(file);
         } catch (FileNotFoundException e) {
-            throw new FileNotFoundException(name);
+            throw new FileNotFoundException(path);
         }
     }
 
@@ -68,7 +68,16 @@ public class ImageService {
     private String generateUniqueFileName(String fileName) {
         String name = FileNameUtils.getBaseName(fileName);
         String extension = FileNameUtils.getExtension(fileName);
-        return name.concat("_").concat(String.valueOf(UUID.randomUUID())).concat(".")
-            .concat(extension);
+        String uniqueFileName;
+        do {
+            uniqueFileName = name.concat("_").concat(String.valueOf(UUID.randomUUID()))
+                .concat(".")
+                .concat(extension);
+        } while (!isPathUnique(uniqueFileName));
+        return uniqueFileName;
+    }
+
+    private boolean isPathUnique(String path) {
+        return imageRepository.existsByPath(path);
     }
 }

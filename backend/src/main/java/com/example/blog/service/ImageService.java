@@ -73,11 +73,11 @@ public class ImageService {
             uniqueFileName = name.concat("_").concat(String.valueOf(UUID.randomUUID()))
                 .concat(".")
                 .concat(extension);
-        } while (!isPathUnique(uniqueFileName));
+        } while (isPathExist(uniqueFileName));
         return uniqueFileName;
     }
 
-    private boolean isPathUnique(String path) {
+    private boolean isPathExist(String path) {
         return imageRepository.existsByPath(path);
     }
 }

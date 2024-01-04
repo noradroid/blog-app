@@ -3,11 +3,13 @@ package com.example.blog.service;
 import com.example.blog.constants.StatusConstants;
 import com.example.blog.domain.Image;
 import com.example.blog.exception.FileNotFoundException;
+import com.example.blog.exception.ResponseCodeException;
 import com.example.blog.repository.ImageRepository;
 import com.example.blog.service.adapter.MinioAdapter;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.compress.utils.FileNameUtils;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -56,7 +59,12 @@ public class ImageService {
         }
     }
 
-    public Resource downloadImage(Image image) {
+    public Resource downloadImage(Long id) {
+        Optional<Image> opt = imageRepository.findById(id);
+        if (opt.isEmpty()) {
+            throw new ResponseCodeException(HttpStatus.NOT_FOUND, "Image is not found");
+        }
+        Image image = opt.get();
         try {
             byte[] file = minioAdapter.downloadFile(bucketName, image.getPath());
             return new ByteArrayResource(file);

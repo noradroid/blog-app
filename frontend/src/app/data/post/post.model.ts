@@ -7,5 +7,6 @@ export type Post = {
   createdDate: string;
   lastModifiedDate: string;
   user: User;
+  imageId: number;
   active?: boolean;
 };

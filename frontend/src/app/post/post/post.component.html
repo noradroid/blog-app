@@ -7,6 +7,6 @@
     Posted by
     <a [routerLink]="['/u', post.user.username]">{{ post.user.username }}</a>
   </div>
-  <img class="block" src="https://picsum.photos/300/200" />
+  <img [src]="imgUrl$ | async" />
   <div [innerHtml]="post.content | html"></div>
 </div>

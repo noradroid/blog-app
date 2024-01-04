@@ -1,0 +1,17 @@
+<div class="flex flex-col gap-3">
+  <ng-container *appHttpConnectionError="posts$">
+    <ng-container *ngFor="let post of posts$ | async">
+      <div>
+        <h2 class="mb-2" [routerLink]="['/post', post.id]">{{ post.title }}</h2>
+        <img
+          style="height: 200px; width: 300px; object-fit: cover"
+          [src]="imageService.getImageUrl(post.imageId)"
+        />
+        <div [innerHtml]="post.content | html"></div>
+        <div class="mt-1 text-sm text-gray-400">
+          Last updated: {{ post.lastModifiedDate | date: 'medium' }}
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>

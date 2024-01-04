@@ -1,21 +1,22 @@
-import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { mergeMap, of, shareReplay } from 'rxjs';
 
-import { AuthService } from '../core/auth/auth.service';
-import { PostHttpService } from '../data/post/post.http.service';
-import { HttpConnectionErrorDirective } from '../shared/error/http-connection-error/http-connection-error.directive';
-import { HtmlPipe } from '../shared/html/html.pipe';
+import { HttpConnectionErrorDirective } from 'shared/error/http-connection-error/http-connection-error.directive';
+import { HtmlPipe } from 'shared/html/html.pipe';
+import { AuthService } from 'src/app/core/auth/auth.service';
+import { PostHttpService } from 'src/app/data/post/post.http.service';
+import { ImageHttpService } from 'src/app/data/image/image.http.service';
 
 @Component({
-  selector: 'app-feed',
+  selector: 'app-post-card-feed',
   standalone: true,
   imports: [CommonModule, HttpConnectionErrorDirective, RouterLink, HtmlPipe],
-  templateUrl: './feed.component.html',
-  styleUrls: ['./feed.component.scss'],
+  templateUrl: './post-card-feed.component.html',
+  styleUrls: ['./post-card-feed.component.scss'],
 })
-export class FeedComponent {
+export class PostCardFeedComponent {
   @Input() home = true;
   user$ = this.authService.user$;
   posts$ = this.user$.pipe(
@@ -35,6 +36,7 @@ export class FeedComponent {
 
   constructor(
     private authService: AuthService,
-    private postService: PostHttpService
+    private postService: PostHttpService,
+    public imageService: ImageHttpService
   ) {}
 }

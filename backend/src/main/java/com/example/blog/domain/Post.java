@@ -38,7 +38,7 @@ public class Post implements Serializable {
     private String description;
 
     @NotNull
-    @Column
+    @Column(columnDefinition = "text")
     private String content;
 
     @CreatedDate

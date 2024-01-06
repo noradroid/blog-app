@@ -1,13 +1,23 @@
 @layer base {
   h1 {
-    @apply text-3xl font-bold;
+    @apply text-2xl font-bold md:text-4xl;
   }
 
   h2 {
-    @apply text-xl font-semibold;
+    @apply text-xl font-semibold md:text-2xl;
+  }
+
+  body {
+    @apply text-sm md:text-base;
   }
 
   /* a {
     @apply underline;
   } */
+}
+
+@layer components {
+  .sm-text {
+    @apply text-xs md:text-sm;
+  }
 }

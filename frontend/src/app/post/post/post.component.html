@@ -5,7 +5,9 @@
   </div>
   <div class="text-sm text-gray-700">
     Posted by
-    <a [routerLink]="['/u', post.user.username]">{{ post.user.username }}</a>
+    <a [routerLink]="['/u', post.user.username]" class="underline">{{
+      post.user.username
+    }}</a>
   </div>
   <img [src]="imgUrl$ | async" />
   <div [innerHtml]="post.content | html"></div>
